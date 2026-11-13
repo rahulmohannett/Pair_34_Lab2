@@ -1,0 +1,16 @@
+# pinned at first Colab/Kaggle run (pip freeze); placeholders
+torch
+pymupdf
+sentence-transformers
+rank_bm25
+chromadb
+transformers
+accelerate
+diffusers
+peft
+torchmetrics
+open_clip_torch
+lpips
+langgraph
+gradio
+bitsandbytes
