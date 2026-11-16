@@ -1,0 +1,66 @@
+{
+ "stamp": "20261116_0628_golden",
+ "notebook_version": "p1-v3.9 2026-11-15: v3.5 plus lookups for a span of years and for two groups compared; answers state the values they rest on and the forecasts those replace",
+ "hardware": {
+  "gpu": "Tesla T4\nTesla T4",
+  "gpu_mem": "15360 MiB\n15360 MiB",
+  "driver": "580.178.04\n580.178.04",
+  "cuda": "13.0",
+  "cpu_cores": 4,
+  "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+  "ram_gb": 31.3,
+  "disk_free_gb": 966.9
+ },
+ "vlm": "Qwen/Qwen2.5-VL-7B-Instruct",
+ "dtype": "4bit",
+ "text_model": "Qwen/Qwen2.5-14B-Instruct",
+ "text_precision": "4bit",
+ "focused_readings": 6,
+ "model_copies": 1,
+ "wall_min": 17.300035278002422,
+ "reranker": "BAAI/bge-reranker-base",
+ "top_k": 12,
+ "fact_lookup": false,
+ "answered_from_facts": 0,
+ "short_context": 0,
+ "answers_replaced_by_facts": 0,
+ "answers_expanded_by_facts": 0,
+ "focus_applied": 0,
+ "model_calculations": 7,
+ "plan_repaired_or_rejected": 0,
+ "oom_skipped": 0,
+ "images_dropped": 0,
+ "prompt_tokens_max": 7237,
+ "prompt_budget": 9000,
+ "piecewise": true,
+ "top_k_final": 12,
+ "mem_probe": {
+  "model": "Qwen/Qwen2.5-14B-Instruct",
+  "piecewise": true,
+  "piece": 768,
+  "free_gb": {
+   "0": 10.33,
+   "1": 8.37
+  },
+  "peak_gb_3000": {
+   "0": 0.66,
+   "1": 0.51
+  },
+  "peak_gb_6000": {
+   "0": 1.05,
+   "1": 1.01
+  },
+  "memory_fit_tokens": 38617,
+  "prompt_tokens_per_s": 523
+ },
+ "context_trimmed": 0,
+ "small_gpu": false,
+ "baseline": true,
+ "median_s": 40.495293617248535,
+ "total_min": 17.299103033542632,
+ "status_counts": {
+  "answered": 20,
+  "session_override": 3,
+  "not_found": 2
+ }
+}

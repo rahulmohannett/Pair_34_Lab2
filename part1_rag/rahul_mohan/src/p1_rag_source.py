@@ -17,7 +17,7 @@
 
 # %%
 # Cell 1 - run information (required)
-NOTEBOOK_VERSION = "p1-v3.3 2026-11-12: v3.2 + prompt fed in pieces (memory grows linearly), larger context, more passages"
+NOTEBOOK_VERSION = "p1-v3.9 2026-11-15: v3.5 plus lookups for a span of years and for two groups compared; answers state the values they rest on and the forecasts those replace"
 import os
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")   # less fragmentation on 16 GB GPUs
 import subprocess, sys, random, numpy as np, torch
@@ -87,8 +87,9 @@ QUESTIONS_PATH = os.environ.get("QUESTIONS_PATH", str(DATA / "Questions.csv"))
 # Golden-set evaluation: set RUN_GOLDEN = True (or env RUN_GOLDEN=1) to answer eval/golden_questions.csv instead.
 # Results go to golden_<stamp>.csv and are scored with eval/score_p1.py; submission.csv is not touched.
 RUN_GOLDEN = os.environ.get("RUN_GOLDEN", "0") == "1"
-EVAL_DIR = next((Path(p) for p in [f"{LAB2}/eval", "../eval"] + sorted({str(Path(x).parent) for x in
-                 glob.glob("/kaggle/input/**/golden_questions.csv", recursive=True)}) if Path(p, "golden_questions.csv").exists()), None)
+_found = sorted({r for base in ("/kaggle/input", "/kaggle/working") if os.path.isdir(base)   # follows linked folders
+                 for r, _, fs in os.walk(base, followlinks=True) if "golden_questions.csv" in fs})
+EVAL_DIR = next((Path(p) for p in [f"{LAB2}/eval", "../eval"] + _found if Path(p, "golden_questions.csv").exists()), None)
 if RUN_GOLDEN:
     assert EVAL_DIR, "golden_questions.csv not found (on Kaggle: upload Lab2/eval as a dataset and attach it)"
     QUESTIONS_PATH = str(EVAL_DIR / "golden_questions.csv")
@@ -927,10 +928,15 @@ def format_context(hits, no_transcript=()):
 
 def parse_json(s):
     m = re.search(r"\{.*\}", s, re.S)
-    try:
-        return json.loads(m.group(0)) if m else None
-    except json.JSONDecodeError:
+    if not m:
         return None
+    try:
+        return json.loads(m.group(0))
+    except json.JSONDecodeError:   # LaTeX such as "\(" or "\Delta" is not a valid JSON escape: drop the backslash
+        try:
+            return json.loads(re.sub(r'\\(?!["\\/bfnrtu])', "", m.group(0)))
+        except json.JSONDecodeError:
+            return None
 
 def clean(ans, hits, question=""):
     ans = ans or {}
@@ -938,14 +944,14 @@ def clean(ans, hits, question=""):
     status = ans.get("status") if ans.get("status") in STATUSES else "answered"
     if str(ans.get("answer", "")).strip().strip('"').lower() in STATUSES:   # model put the status in the answer
         status = str(ans["answer"]).strip().strip('"').lower()
-    figs = [f.strip("[]() ") for f in ans.get("figure_references", []) if isinstance(f, str) and f.strip("[]() ") in known]
+    figs = [f.strip("[]()<> ") for f in ans.get("figure_references", []) if isinstance(f, str) and f.strip("[]()<> ") in known]
     for c in ans.get("citations", []):   # a cited figure/table is also a figure reference
-        lab = str(c).strip("[]() ").split(":", 1)[-1].strip()
+        lab = str(c).strip("[]()<> ").split(":", 1)[-1].strip()
         if lab in known and lab not in figs:
             figs.append(lab)
     cites = []
     for c in ans.get("citations", []):
-        c = str(c).strip().strip("[]()").strip().replace(" :", ":").replace(": ", ":")
+        c = str(c).strip().strip("[]()<>").strip().replace(" :", ":").replace(": ", ":")
         m = re.match(r"^(DOC[123]):([A-C]?\d*-\d+)$", c)   # label without "Figure"/"Table"
         if m:
             own = [f["figure_id"] for f in figures if f["doc_id"] == m.group(1) and f["figure_id"].split(" ", 1)[-1] == m.group(2)]
@@ -1372,13 +1378,103 @@ def user_number(question):
 VINTAGE_BEFORE = re.compile(r"\b(fall|autumn|spring|summer|winter|january|february|march|april|may|june|july|august|"
                             r"september|october|november|december)[ -]?$", re.I)   # "fall-2011 forecast": a publication date
 
+def split_quantities(items, question, op):
+    """A comparison of two quantities ("world vs advanced economies") that the model wrote as ONE item listing both.
+    tidy_items keeps one quantity per item, so the other was lost. Split the item in two when the question names
+    what tells the two quantities apart. Purely by words, in the order the model listed them."""
+    if op not in ("difference", "compare") or len(items) != 1 or not isinstance(items[0], dict) \
+            or "user_value" in items[0]:
+        return items
+    if len(set(re.findall(r"(?<![\w-])(?:19|20)\d{2}(?![\w-])", question))) >= 2:
+        return items                       # one quantity at two years: handled by the two-asked-years plan
+    if re.search(r"\b(forecast\w*|project\w*|outturn\w*)", question, re.I):
+        return items                       # outturn against forecast: one quantity twice
+    groups = {}
+    for i in to_ids(items[0].get("series", [])):
+        groups.setdefault(series_key(SERIES[i]), []).append(i)
+    if len(groups) < 2:
+        return items
+    qw, words = _words(question), (lambda k: set(k[0]) | set(k[1]))
+    keys = list(groups)
+    pairs = [(a, b) for n, a in enumerate(keys) for b in keys[n + 1:]
+             if all(not d or d & qw for d in (words(a) - words(b), words(b) - words(a)))]
+    if len(pairs) != 1:
+        return items
+    return [dict(items[0], series=groups[k]) for k in pairs[0]]
+
+SIZE_CUE = re.compile(r"\bhow (much|many|bad|high|low|large|big|fast|far|did|has|have)\b|\bwhat happened to\b|"
+                      r"\b(trend|path|course|evolv\w*|chang\w*|peak\w*)\b", re.I)
+
+def span_values(items, question):
+    """A question about the size or course of ONE tabulated quantity over several years ("how did the deficit change
+    after its peak"). The model writes the years as a span or a list ("2007-2013"), which matches no single row, so
+    the lookup used to return nothing and the answer relied on older prose. Return one line per year instead.
+    Only when the question names the place and asks about size or change; the model still writes the answer."""
+    cat = [it for it in items if it.get("series")]
+    if len(items) != 1 or len(cat) != 1 or not SIZE_CUE.search(question):
+        return None
+    it = cat[0]
+    ystr = str(it.get("year", "")).replace("–", "-")
+    if ystr.strip() in {x["year"] for x in FACTS}:
+        return None
+    key = series_key(SERIES[it["series"][0]])
+    ids = [i for i in it["series"] if series_key(SERIES[i]) == key]
+    qw = _words(question)
+    if qw & {"europe", "european", "eurozone"}:
+        qw |= {"euro", "area"}
+    if not (key[0] & qw):
+        return None
+    names = {SERIES[i] for i in ids}
+    per = {}
+    for x in FACTS:
+        if x["source"] + " | " + x["series"] in names:
+            per.setdefault(x["source"], []).append(x["year"])
+    start = lambda p: int(p[:4])
+    avail = sorted({p for ps in per.values() for p in ps}, key=lambda p: (start(p), int(p[-4:])))
+    want = []
+    for t in re.findall(r"(?:19|20)\d{2}(?:\s*-\s*(?:19|20)\d{2})?", ystr):
+        t = re.sub(r"\s", "", t)
+        if t in avail:
+            want.append(t)
+        elif "-" in t:
+            a, b = (int(v) for v in t.split("-"))
+            want += [p for p in avail if a <= start(p) and int(p[-4:]) <= b]
+    want = list(dict.fromkeys(want))
+    if len(want) < 2:
+        return None
+    last = max(want, key=lambda p: int(p[-4:]))
+    if any(max(ps, key=lambda p: int(p[-4:])) == last for ps in per.values()):
+        # the list stops where one table stops; a later table carries the same quantity further (answering rule 1)
+        want += [p for p in avail if start(p) > int(last[-4:])]
+    want = sorted(dict.fromkeys(want), key=lambda p: (start(p), int(p[-4:])))[-9:]
+    lines = []
+    for p in want:
+        r = resolve({"series": ids, "year": p, "kind": "current"})
+        if not r:
+            continue
+        line = f"- {r['label']}: {fmt(r['value'])}{r.get('unit') or ''}"
+        if re.search(r"\bdeficits?\b", question, re.I) and "balance" in r["label"].lower() and r["value"] < 0:
+            line += f", a deficit of {fmt(-r['value'])}{r.get('unit') or ''}"
+        line += f" [{r['best_source']}]"
+        if r.get("kind") == "forecast":
+            line += " (forecast)"
+        if r.get("replaced"):
+            line += "; replaces " + ", ".join(f"{fmt(v)} ({k}, {s})" for v, s, k in r["replaced"])
+        lines.append(line)
+    return "\n".join(lines) if len(lines) >= 2 else None
+
 def lookup(question, user_value=None):
     """Returns (facts_text, info) or (None, info) when the question is not a catalogue lookup."""
     raw = llm_generate([{"role": "user", "content": [{"type": "text", "text":
                          FORM.format(catalogue=catalogue(), question=question)}]}], 200)
     form = parse_json(raw) or {}
     info = {"form": form}
-    items = tidy_items(form.get("items") or [], question)
+    raw_items = form.get("items") or []
+    if user_value is None:   # a user-supplied value changes what the items mean: leave those plans as they are
+        raw_items = split_quantities(raw_items, question, form.get("operation"))
+    if len(raw_items) == 2 and len(form.get("items") or []) == 1:
+        info["plan_repair"] = "two quantities in one item"
+    items = tidy_items(raw_items, question)
     if not items:
         items = tidy_items(match_series(question), question)
         if len(items) == 2 and re.search(r"\b(larger|bigger|more|higher|lower|smaller|less|exceed)", question, re.I):
@@ -1401,6 +1497,20 @@ def lookup(question, user_value=None):
         for it in items:
             if it.get("series") and not re.fullmatch(r"(19|20)\d{2}", str(it.get("year", "")).strip()):
                 it["year"] = asked[0]; info["plan_repair"] = "one asked year"
+    elif len(asked) == 2:
+        # "between 2007 and 2010": one quantity at two years. The model often writes the span ("2007-2010",
+        # "2007, 2008, 2009, 2010") as one year, which matches no row; split it into the two asked years, later first.
+        cat = [it for it in items if it.get("series")]
+        if len(cat) == 1 and len(items) == 1 and not re.fullmatch(r"(19|20)\d{2}", str(cat[0].get("year", "")).strip()) \
+                and str(cat[0].get("year", "")).replace("–", "-").strip() not in {x["year"] for x in FACTS}:
+            later, earlier = sorted(asked, key=int, reverse=True)
+            items = [dict(cat[0], year=later), dict(cat[0], year=earlier)]
+            change = re.search(r"\b(ris[ei]\w*|rose|f[ae]ll\w*|chang\w*|increas\w*|decreas\w*|declin\w*|drop\w*|gr[eo]w\w*|"
+                               r"how (many|much)|by how|differ\w*)\b", question, re.I)
+            why = re.match(r"\s*(why|how come|what caused|what explains)\b", question, re.I)
+            form["operation"] = "difference" if change and not why else "value"   # why-questions: report both years
+                                                                                   # so the premise can be checked
+            info["plan_repair"] = "two asked years"
     cur = [it for it in items if it.get("series") and it.get("kind") != "forecast"]
     fcs = [it for it in items if it.get("series") and it.get("kind") == "forecast"]
     if len(items) == 2 and len(cur) == 1 and len(fcs) == 1 and set(cur[0]["series"]) & set(fcs[0]["series"]) \
@@ -1409,6 +1519,11 @@ def lookup(question, user_value=None):
     info["items"] = items
     if not items:
         return None, info
+    span = span_values(items, question) if user_value is None else None
+    if span:   # values over a span of years: context for the model's own answer, nothing decided by code
+        info.update(status="answered", sources=[], resolved=[], sentence="", must=[], force=False, decided=False,
+                    plan_repair="values over the asked years")
+        return span, info
     if form.get("operation") in (None, "none", ""):   # items given but no operation: report the values
         form["operation"] = "value"
     res = [resolve(it) for it in items if isinstance(it, dict)]
@@ -1431,6 +1546,19 @@ def lookup(question, user_value=None):
         doc = res[k]
         res[k] = {"value": user_value, "user": True, "sources": [], "doc": doc,
                   "label": ("user-supplied " + doc["label"]) if doc else "user-supplied value"}
+    if len(res) == 2 and all(res) and sum(bool(r.get("user")) for r in res) == 1:
+        u = 0 if res[0].get("user") else 1
+        k = 1 - u
+        if not res[u].get("doc") and items[k].get("series"):
+            pl, var = series_key(SERIES[items[k]["series"][0]])
+            uw = _words(res[u]["label"])
+            vs_doc = re.search(r"\b(actual\w*|reported|reports?|documents?|official\w*|recorded|real\w*|instead)\b", question, re.I)
+            if var and var <= uw and (not pl or pl <= uw) and not vs_doc:   # unless the user asks for that comparison
+                # the user's number replaces this document value; subtracting one from the other answers nothing
+                # (the plan missed the quantity the question combines it with). Let the model answer from the passages.
+                res[u]["doc"], res[u]["label"] = res[k], "user-supplied " + res[k]["label"]
+                info.update(plan_invalid="user value and document value are the same quantity", resolved=[res[u]])
+                return None, info
     if user_value is None and res and any(r is None for r in res):
         yrs = sorted(int(y) for x in FACTS for y in re.findall(r"(?:19|20)\d{2}", x["year"]))   # incl. range ends
         asked = [(it, int(str(it.get("year")))) for it, r in zip(items, res)
@@ -1556,6 +1684,47 @@ def has_value(answer, m):
         r"\b(below|lower|less|fell|fall\w*|short|under\w*|negative|smaller|worse|decreas\w*|declin\w*|drop\w*|"
         r"deficit|contract\w*|shr[aiu]nk|minus|down)\b", a, re.I)))
 
+def stated_inputs(answer, calc, facts, op, two_years):
+    """An answer states the values it rests on ("fell by 1.3" also needs 66.0 and 64.7; "the deficit jumped" also
+    needs its two levels). Returns one sentence with the values the answer leaves out, or "" when none is missing.
+    The model's own calculation counts only when the answer states its result."""
+    norm = lambda t: (t.rstrip("0").rstrip(".") if "." in t else t)
+    if calc:
+        expr, val = calc
+        ops = [norm(n) for n in re.findall(r"\d+(?:\.\d+)?", expr)]
+        if len(ops) >= 2 and has_value(answer, fmt(abs(val))) and not all(has_value(answer, n) for n in ops):
+            return f"Calculation: {expr.strip()} = {fmt(val)}."
+        return ""
+    if not facts or not (op in ("difference", "compare") or (op == "value" and two_years)):
+        return ""
+    lines = [m for m in re.findall(r"^- (?!Computed)(.+?): (-?\d+(?:\.\d+)?)(%?)([^\[;]*?) \[([^\]]+)\]", facts, re.M)
+             if m[4] != "user-supplied"]
+    lines = list(dict.fromkeys(lines))
+    miss = [m for m in lines if not has_value(answer, norm(m[1].lstrip("-")))]
+    if not miss or len(lines) > 4:
+        return ""
+    return ("Values used: " if op != "value" else "Values from the tables: ") + "; ".join(
+        f"{l}: {v}{u}{rest} ({s})" for l, v, u, rest, s in miss) + "."
+
+def replaced_notes(answer, facts):
+    """Answering rule 1: an answer that states an outturn also mentions the forecast it replaces. For each looked-up
+    line "value [source]; replaces X (forecast, source)" whose value the answer states without X."""
+    norm = lambda t: (t.rstrip("0").rstrip(".") if "." in t else t)
+    out = []
+    for label, val, unit, old, src in re.findall(
+            r"^- (.+?): (-?\d+(?:\.\d+)?)(%?)[^\[\n]*\[[^\]]+\]; replaces (-?\d+(?:\.\d+)?) \(forecast, ([^)]+)\)", facts or "", re.M):
+        y = re.search(r"((?:19|20)\d{2})\s*$", label)
+        if y and has_value(answer, norm(val.lstrip("-"))) and not has_value(answer, norm(old.lstrip("-"))):
+            out.append(f"{old}{unit} for {y.group(1)} ({src})")
+    out = list(dict.fromkeys(out))
+    return "Earlier forecasts these replace: " + "; ".join(out) + "." if 0 < len(out) <= 3 else ""
+
+def value_sources(answer, facts):
+    """Tables whose looked-up values the answer states (one line per year; see span_values)."""
+    norm = lambda t: (t.rstrip("0").rstrip(".") if "." in t else t)
+    return list(dict.fromkeys(s for v, s in re.findall(r"^- .+?: (-?\d+(?:\.\d+)?)%?[^\[\n]*\[([^\]]+)\]", facts or "", re.M)
+                              if has_value(answer, norm(v.lstrip("-")))))
+
 def used_sources(answer, finfo):
     """Sources of the code-resolved values that the final answer actually states (provenance by use)."""
     out = []
@@ -1677,6 +1846,53 @@ def outturn_notes(answer, question):
     pages = [f"{o['doc_id']}:p{o['page']}" for _, _, o in found]
     return text, list(dict.fromkeys([o["source"] for _, _, o in found] + pages))
 
+def chart_rows(desc):
+    """(series, category, value) rows from the DATA block of a chart transcription; series is '' for one-series charts.
+    Only rows whose category is a name (a country, a group), not a number on an axis."""
+    block = re.split(r"\n\s*NOTES:", desc.split("DATA:", 1)[-1])[0] if "DATA:" in desc else ""
+    out = []
+    for line in block.splitlines():
+        cells = [c.strip() for c in line.split("|") if c.strip()]
+        num = re.fullmatch(r"-?\d+(?:\.\d+)?", cells[-1]) if cells else None
+        if not num or len(cells) not in (2, 3) or not re.search(r"[A-Za-z]", cells[-2]):
+            continue
+        out.append(("" if len(cells) == 2 else cells[0], cells[-2], float(cells[-1])))
+    return out
+
+def chart_changes(named):
+    """For named charts that share categories, the change per category computed by code: two one-series charts
+    (e.g. the same countries in two years), or one chart with two series over the same categories (e.g. forecast
+    and outturn per group). Returns text for the prompt, or ''."""
+    named = [f for f in named if f.get("trust_level") != "low"]
+    pairs = []
+    if len(named) == 2:
+        a, b = named
+        ya, yb = (re.findall(r"(?:19|20)\d{2}", f.get("caption", "") + " " + f.get("description", "")[:200]) for f in (a, b))
+        if ya and yb and ya[-1] > yb[-1]:
+            a, b = b, a                     # earlier chart first
+        ra, rb = chart_rows(a.get("description", "")), chart_rows(b.get("description", ""))
+        if ra and rb and not any(s for s, _, _ in ra + rb):
+            va, vb = {c: v for _, c, v in ra}, {c: v for _, c, v in rb}
+            pairs = [(c, va[c], vb[c]) for c in va if c in vb]
+            names = (f"{a['doc_id']}:{a['figure_id']}", f"{b['doc_id']}:{b['figure_id']}")
+    elif len(named) == 1:
+        rows = chart_rows(named[0].get("description", ""))
+        series = list(dict.fromkeys(s for s, _, _ in rows))
+        if len(series) == 2 and all(series):
+            v1 = {c: v for s, c, v in rows if s == series[0]}
+            v2 = {c: v for s, c, v in rows if s == series[1]}
+            pairs = [(c, v1[c], v2[c]) for c in v1 if c in v2]
+            names = tuple(series)
+    if len(pairs) < 2:
+        return ""
+    lines = [f"- {c}: {fmt(x)} -> {fmt(y)}, change {'+' if y - x > 0 else ''}{fmt(round(y - x, 2))}" for c, x, y in pairs]
+    lo = min(pairs, key=lambda p: p[2] - p[1]); hi = max(pairs, key=lambda p: p[2] - p[1])
+    ext = ([f"largest fall: {lo[0]} ({fmt(round(lo[2] - lo[1], 2))})"] if lo[2] < lo[1] else []) + \
+          ([f"largest rise: {hi[0]} (+{fmt(round(hi[2] - hi[1], 2))})"] if hi[2] > hi[1] else [])
+    falls = [c for c, x, y in pairs if y < x]
+    return (f"CHART VALUES COMPARED BY CODE ({names[0]} -> {names[1]}; change = second minus first):\n" + "\n".join(lines)
+            + "\n" + (lambda t: t[:1].upper() + t[1:])("; ".join(ext)) + f". Fell in: {', '.join(falls) or 'none'}.\n\n")
+
 class Conversation:
     def __init__(self):
         self.history = []          # [(question, answer_json)]
@@ -1723,6 +1939,9 @@ class Conversation:
             trace.setdefault("focused_read", {})[f["figure_id"]] = read
             note += (f"FOCUSED READING of {f['doc_id']}:{f['figure_id']} (a careful second look at the named chart for "
                      f"exactly the asked point; use these values for that point):\n{read}\n\n")
+        cmp_note = chart_changes(named)   # per-category changes, so "which fell most" is read off, not reasoned out
+        if cmp_note:
+            note += cmp_note; trace["chart_changes"] = cmp_note
         if facts:
             note += ("VALUES FROM THE DOCUMENT TABLES (looked up by code; use these numbers exactly, do not recompute, "
                      "mention any value they replace):\n" + facts + "\n"
@@ -1832,6 +2051,13 @@ class Conversation:
                 ans["answer"] = new; changes.append("answer: deficit stated as a positive size")
         # 4) Sources: from the looked-up values the final answer states (provenance by use).
         src = used_sources(ans["answer"], finfo) if facts and finfo.get("resolved") else []
+        if src and re.search(r"\b(charts?|graphs?|plots?|figures?)\b", question, re.I):
+            # the question asks about charts: keep the charts the model cited when they hold the values it states
+            vals = set(re.findall(r"\d+\.\d+", ans["answer"]))
+            chart = [c for c in ans["citations"] if re.search(r":Figure ", c) and vals & set(re.findall(r"\d+\.\d+", next(
+                (f.get("description", "") for f in figures if f"{f['doc_id']}:{f['figure_id']}" == c), "")))]
+            if chart:
+                src = chart; changes.append("references: charts kept (the question asks about charts)")
         if src:
             pages = [] if decided else [c for c in ans["citations"] if re.match(r"^DOC\d:p\d+$", c)]
             ans["citations"] = list(dict.fromkeys(src + pages))
@@ -1850,6 +2076,9 @@ class Conversation:
         if not src and not named_figures(sq):   # figure refs are scored by F1: keep only figures the answer used
             nodates = DATE_RE.sub(" ", ans["answer"].replace("−", "-"))   # "September 15, 2008" is not a data value
             nums = set(re.findall(r"\d+\.\d+|\d+", nodates))
+            if calc:   # the operands of the model's own calculation were used too ("66.0 - 64.7" -> "fell by 1.3")
+                nums |= {n.rstrip("0").rstrip(".") if "." in n else n for n in re.findall(r"\d+\.\d+|\d+", calc[0])} \
+                        | set(re.findall(r"\d+\.\d+|\d+", calc[0]))
             def used(label):
                 f = next((x for x in figures if x["figure_id"] == label), None)
                 return bool(f) and bool(nums & set(re.findall(r"\d+\.\d+|\d+", f.get("description", "") + " "
@@ -1870,6 +2099,18 @@ class Conversation:
             ans.update(status="not_found", figure_references=[], citations=[],   # not_found cites nothing, as elsewhere
                        answer=f"The documents do not report {' '.join(sorted(qv))} for {e}. They mention {e} only in "
                               f"another context: \"{said[:200]}\" ({d}:p{pg}).")
+        # 5b) The answer itself rejects the question's premise ("did not rise; they fell"): that is a false premise.
+        if ans["status"] == "answered" and not (override or permanent) and \
+                re.match(r"\s*(why|how come|what caused|what explains)\b", question, re.I) and \
+                re.search(r"\b(did not|didn't|does not|was not|were not|not)\s+(actually\s+)?(ris\w*|f[ae]ll\w*|grow\w*|"
+                          r"increas\w*|decreas\w*|declin\w*|contract\w*|drop\w*|improv\w*|worsen\w*)", ans["answer"], re.I):
+            ans["status"] = "false_premise"; changes.append("status: false_premise (the answer rejects the premise)")
+        # 5c) A low-trust (unverified) figure named in the question is not evidence: say so.
+        low = [REC[i] for i in named_figures(question) if REC[i]["trust_level"] == "low"]
+        if low and ans["status"] == "not_found" and "unverified" not in ans["answer"].lower():
+            ans["answer"] = (f"{low[0]['figure_id']} ({low[0]['doc_id']}) is unverified, low-trust material, so it cannot "
+                             f"be used as evidence; the trusted documents do not report this. " + ans["answer"])
+            changes.append("answer: low-trust figure named")
         # 6) A superseded forecast stated as if it were the value: add the outturn that replaces it (answering rule 1).
         if ans["status"] in ("answered", "conflict") and not named_figures(sq) and not FORECAST_ASK.search(question):
             notes = outturn_notes(ans["answer"], f"{question} {sq}")
@@ -1883,6 +2124,11 @@ class Conversation:
                     if re.match(r"(Figure|Table) ", lab) and lab not in ans["figure_references"]:
                         ans["figure_references"].append(lab)
                 changes.append("answer: outturn added for a superseded forecast")
+        if facts and finfo.get("plan_repair") == "values over the asked years" and ans["status"] != "not_found":
+            for s in value_sources(ans["answer"], facts):   # a stated looked-up value: its table is a source
+                lab = s.split(":", 1)[1]
+                if re.match(r"(Figure|Table) ", lab) and lab not in ans["figure_references"]:
+                    ans["figure_references"].append(lab); changes.append(f"references: {lab} holds a stated value")
         for lab in ans["figure_references"]:   # every referenced figure/table is cited
             owner = [f for f in figures if f["figure_id"] == lab and f["trust_level"] != "low"]
             if len(owner) == 1 and f"{owner[0]['doc_id']}:{lab}" not in ans["citations"]:
@@ -1890,9 +2136,31 @@ class Conversation:
         page_of = {f"{f['doc_id']}:{f['figure_id']}": f"{f['doc_id']}:p{f['page']}" for f in figures}
         ans["citations"] = list(dict.fromkeys(x for c in ans["citations"] for x in ([c, page_of[c]] if c in page_of else [c])))
         ans["answer"] = " ".join(ans["answer"].split()[:120])
+        # 7) The answer states the values it rests on. These sentences are added last and only when they fit in the
+        # 120 words: sources and status above are not touched, and later turns see the answer without them.
+        core, tails = ans["answer"], []
+        if ans["status"] != "not_found" and not permanent:
+            tails.append(stated_inputs(core, calc, facts if uv is None else None,
+                                       (finfo.get("form") or {}).get("operation"),
+                                       not decided and finfo.get("plan_repair") == "two asked years"))
+        if override and uv is not None and not finfo.get("resolved") and self.history and \
+                re.search(r"\b(it|that|this)\b(?! conversation| chat)", question, re.I):
+            # "suppose it was actually X": the value replaced is the one the previous answer gave (answering rule 5)
+            prev = self.history[-1][1]
+            body = DATE_RE.sub(" ", prev["answer"].replace("−", "-"))
+            vals = re.findall(r"(?<![\d.])-?\d+(?:\.\d+)?(?=\s*%)", body)
+            if vals and abs(float(vals[0]) - uv) > 1e-9 and not has_value(core, vals[0].lstrip("-")):
+                psrc = next((c for c in prev["citations"] if re.search(r":(Figure|Table) ", c)), None) or \
+                       next(iter(prev["citations"]), None)
+                tails.append(f"The documents themselves report {vals[0]}%" + (f" ({psrc})." if psrc else "."))
+        if facts and not decided and uv is None and ans["status"] in ("answered", "conflict"):
+            tails.append(replaced_notes(core, facts))
+        for t in tails:
+            if t and len(f"{ans['answer']} {t}".split()) <= 120:
+                ans["answer"] = f"{ans['answer']} {t}"; changes.append("answer: values it rests on stated")
         trace.update(final=ans, changes=changes)
         TRACES.append(trace)
-        self.history.append((question, ans))
+        self.history.append((question, dict(ans, answer=core)))
         return ans
 
 def new_conversation():
@@ -1911,6 +2179,7 @@ print(json.dumps(c.answer("And in 2011?"), indent=1))                           
 q = pd.read_csv(QUESTIONS_PATH, dtype=str, keep_default_na=False)
 N_DONE = [0]
 LOOP_BUDGET_S = 60 * float(os.environ.get("LOOP_BUDGET_MIN", "62"))   # question loop; set-up takes about 12 more minutes
+FAST_S = 45.0   # average seconds per question with 4,000-token prompts (measured in earlier runs)
 def run_conversation(item):
     global PROMPT_TOKENS
     conv_id, turns = item
@@ -1926,10 +2195,11 @@ def run_conversation(item):
                 if DEVICE == "cuda" else "")
         with SHARED:   # progress by count, never by question id (ids must not appear in the saved notebook)
             N_DONE[0] += 1
-            if N_DONE[0] >= 3 and PROMPT_TOKENS and PROMPT_TOKENS > 4000 and \
-                    (time.time() - t_run) / N_DONE[0] * len(q) > LOOP_BUDGET_S:   # on course to run long: shorter prompts
-                PROMPT_TOKENS = max(4000, int(PROMPT_TOKENS * 0.75))
-                print(f"run is slow - prompt budget lowered to {PROMPT_TOKENS} tokens", flush=True)
+            left = len(q) - N_DONE[0]   # shorter prompts only when the time left per question drops to what
+            if left and PROMPT_TOKENS and PROMPT_TOKENS > 4000 and \
+                    (LOOP_BUDGET_S - (time.time() - t_run)) / left < FAST_S:   # short prompts need (about 45 s each)
+                PROMPT_TOKENS = 4000
+                print(f"run is short of time - prompt budget lowered to {PROMPT_TOKENS} tokens", flush=True)
             print(f"{N_DONE[0]}/{len(q)} done: {a['status']} ({time.time() - t0:.0f}s{peak})", flush=True)
     return out
 
@@ -1972,12 +2242,14 @@ sub.head(10)
 # %%
 # Format check with the provided validator
 v = DATA / "validate_submission.py"
+out_csv = WORK / f"{OUT}_{stamp.replace('_golden', '')}.csv"
 if v.exists():
-    out_csv = WORK / f"{OUT}_{stamp.replace('_golden', '')}.csv"
     print(subprocess.run([sys.executable, str(v), str(out_csv), QUESTIONS_PATH], capture_output=True, text=True).stdout)
 if RUN_GOLDEN and (EVAL_DIR / "score_p1.py").exists():   # Kaggle-style score on our own golden set
-    print(subprocess.run([sys.executable, str(EVAL_DIR / "score_p1.py"), str(out_csv), str(EVAL_DIR / "golden_set.csv")],
-                         capture_output=True, text=True).stdout)
+    r = subprocess.run([sys.executable, str(EVAL_DIR / "score_p1.py"), str(out_csv), str(EVAL_DIR / "golden_set.csv")],
+                       capture_output=True, text=True)
+    print(r.stdout, r.stderr)
+    (WORK / f"golden_score_{stamp.replace('_golden', '')}.txt").write_text(r.stdout + r.stderr)
 
 # %%
 # Run finished - release the GPU (Colab)

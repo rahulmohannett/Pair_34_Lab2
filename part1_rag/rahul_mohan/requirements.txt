@@ -1,0 +1,16 @@
+# Part 1 (multimodal RAG). Runs on Kaggle, GPU T4 x2, Python 3.13, torch 2.11.0+cu130, CUDA 13.0 (printed in Cell 1).
+# The notebook installs these exact versions itself if they are missing:
+pymupdf==1.26.3
+rank_bm25==0.2.2
+chromadb==1.0.15
+sentence-transformers==5.0.0
+qwen-vl-utils==0.0.11
+# Preinstalled in the Kaggle image used for the final run (2026-11-15); the notebook requires transformers >= 4.49.
+torch==2.11.0
+transformers>=4.49.0
+accelerate
+bitsandbytes
+pandas
+numpy
+# Models (open weights, Hugging Face): Qwen/Qwen2.5-VL-7B-Instruct (4-bit), Qwen/Qwen2.5-14B-Instruct (4-bit),
+# BAAI/bge-small-en-v1.5, BAAI/bge-reranker-base. No hosted API is used.

@@ -1,0 +1,5 @@
+,Measurement,Baseline (dense only),Final (hybrid)
+Answer correctness (correct / 25),Primary,15 / 25,22 / 25
+Retrieval Recall@5,Secondary,1.00 (23 of 23),0.96 (22 of 23)
+Citation accuracy,Secondary,0.85 (46 of 54 cited sources),0.91 (60 of 66 cited sources)
+Median seconds per question,Efficiency,40.5,47.8
