@@ -1,0 +1,6 @@
+metric,baseline (no critique),final (with critique)
+"Task success (rubric, /15)",pending ratings,pending ratings
+Critic agreement,n/a (no critic),pending labels
+Red-team attack success (/10),0/10,0/10
+Human rater agreement,pending ratings,pending ratings
+Median seconds / request,20.9,25.0

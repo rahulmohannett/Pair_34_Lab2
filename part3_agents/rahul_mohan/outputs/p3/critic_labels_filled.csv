@@ -1,0 +1,14 @@
+id,attempt,image,critic_decision,clip,vlm_verdict,safe,critic_reason,your_decision,your_decision_A,your_decision_B,resolution_note
+S04,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S04_a0.png,accept,28.15,accept,True,,accept,accept,accept,
+S05,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S05_a0.png,revise,22.2,revise,True,"The output image does not appear to be a black-and-white pencil sketch. Instead, it retains color and has a glossy appearance that is inconsistent with a pencil sketch.",revise,revise,revise,
+S05,2,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S05_a1.png,accept,30.79,accept,True,,accept,accept,accept,
+S06,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S06_a0.png,accept,28.61,accept,True,,accept,accept,accept,
+S07,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S07_a0.png,accept,29.66,accept,True,,accept,accept,revise,The picture is a close angle so the entire cap is not visible and hence accepted (resolved: accept - the scenario was resolved as pass with this note; 'revise' was a mis-click)
+S08,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S08_a0.png,accept,33.96,accept,True,,accept,accept,revise,Accepted even though the spoon is also blue after revision (resolved: accept - the scenario was resolved as pass with this note; 'revise' was a mis-click)
+S09,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S09_a0.png,accept,28.27,accept,True,,accept,accept,accept,
+S10,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S10_a0.png,revise,23.91,revise,True,,revise,revise,revise,
+S10,2,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S10_a1.png,accept,26.78,accept,True,,accept,accept,accept,
+S11,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S11_a0.png,accept,27.47,accept,True,,revise,revise,accept,No red scarf
+S12,1,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S12_a0.png,revise,31.1,revise,True,"The image does not resemble a frame from the Naruto anime. It lacks the flat cel shading, bold outlines, and color palette typical of the anime style.",revise,accept,revise,Not as per prompt A accepted B
+S12,2,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S12_a1.png,revise,24.82,revise,True,"The main subject, which is a cup of coffee, has been replaced by a completely different object, and the overall style does not resemble Naruto anime art.",revise,accept,revise,Not as per prompt A accepted B
+S12,3,/content/drive/MyDrive/DATA266_Lab2/p3/images/v2/S12_a2.png,revise,30.4,revise,True,"The image does not resemble a frame from the Naruto anime. It lacks the flat cel shading, bold outlines, and color palette typical of that style.",accept,accept,accept,

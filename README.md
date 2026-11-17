@@ -20,7 +20,12 @@ part2_lora/         # Stable Diffusion 1.5 LoRA fine-tuning
     notebooks/p2_generate_eval.ipynb  # generation and evaluation (executed)
     notebooks/p2_push_hf.ipynb        # Hugging Face upload
     src/                              # notebook sources + rater app
-part3_agents/       # multi-agent system (to be added)
+part3_agents/       # five-agent image understanding + generation system (LangGraph, Gradio)
+  rahul_mohan/
+    notebooks/p3_agents.ipynb   # executed Colab T4 run: 15 scenarios, 10 red-team cases, results table, app
+    src/                        # notebook source, review-page builder
+    eval/                       # scenarios and red-team cases (committed before the graded run)
+    outputs/p3/                 # JSON traces, human ratings, results table (see part3_agents/rahul_mohan/README.md)
 ```
 
 Rebuild a notebook from its source:
