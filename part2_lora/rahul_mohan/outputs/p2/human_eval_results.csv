@@ -1,0 +1,3 @@
+question,mean_win_rate,mean_pairwise_agreement,all_raters_agree,majority_win_rate
+prompt_better,0.267,0.733,0.6,0.24
+style_better,0.84,0.707,0.56,0.96

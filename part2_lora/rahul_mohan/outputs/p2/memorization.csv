@@ -1,0 +1,21 @@
+model,id,file,nearest_train,nearest_train_caption,clip_sim
+base,p01,base__p01__seed0.png,0319.png,a cat with a tennis ball in its mouth,0.7098
+base,p02,base__p02__seed0.png,0190.png,a white dog with a blue sky in the background,0.6272
+base,p03,base__p03__seed0.png,0222.png,a man standing in front of a bridge,0.6248
+base,p04,base__p04__seed0.png,1042.png,a man with green eyes and a green shirt,0.4353
+base,p05,base__p05__seed0.png,0222.png,a man standing in front of a bridge,0.5967
+base,p06,base__p06__seed0.png,0222.png,a man standing in front of a bridge,0.4983
+base,p07,base__p07__seed0.png,0245.png,a man with glasses and a banda on his head,0.5161
+base,p08,base__p08__seed0.png,0222.png,a man standing in front of a bridge,0.5624
+base,p09,base__p09__seed0.png,0190.png,a white dog with a blue sky in the background,0.5391
+base,p10,base__p10__seed0.png,0823.png,an older man with grey hair and a white shirt,0.6197
+run2_lora_r32,p01,run2_lora_r32__p01__seed0.png,0319.png,a cat with a tennis ball in its mouth,0.7225
+run2_lora_r32,p02,run2_lora_r32__p02__seed0.png,0684.png,a monster with its mouth open and teeth out,0.7401
+run2_lora_r32,p03,run2_lora_r32__p03__seed0.png,0974.png,a girl with long red hair and purple eyes,0.7118
+run2_lora_r32,p04,run2_lora_r32__p04__seed0.png,1018.png,a man with a face full of blood,0.8093
+run2_lora_r32,p05,run2_lora_r32__p05__seed0.png,1064.png,a man in a white robe and a woman in a white robe,0.9134
+run2_lora_r32,p06,run2_lora_r32__p06__seed0.png,0096.png,a man in a red shirt and brown vest,0.8529
+run2_lora_r32,p07,run2_lora_r32__p07__seed0.png,0764.png,a man with a beard and a white headband,0.8873
+run2_lora_r32,p08,run2_lora_r32__p08__seed0.png,1000.png,a man in a green jacket and hat,0.888
+run2_lora_r32,p09,run2_lora_r32__p09__seed0.png,0125.png,a woman with red hair and black eyes,0.8307
+run2_lora_r32,p10,run2_lora_r32__p10__seed0.png,0865.png,a woman with a face full of tears,0.757

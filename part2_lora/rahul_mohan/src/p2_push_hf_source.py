@@ -8,12 +8,12 @@
 # model card. **A CPU runtime is enough.**
 #
 # Before running: add a Colab secret named `HF_TOKEN` (key icon in the left sidebar) with **write** access, and
-# turn on "Notebook access" for it. Repos are created **private**; set `PRIVATE = False` (or add the graders)
-# before submission.
+# turn on "Notebook access" for it. With `PRIVATE = False` the two adapter repos and the generated-image dataset
+# (uploaded by `p2_generate_eval.ipynb`) are made **public**, and the last cells check that without a token.
 
 # %%
 # Cell 1 - run information (required)
-NOTEBOOK_VERSION = "p2-push-v2 2026-11-11: model cards + hash check for the adapters on Drive"
+NOTEBOOK_VERSION = "p2-push-v4 2026-11-16: cards carry the v4.1 results; both adapters and the image dataset made public"
 import os, subprocess, sys, random, numpy as np, torch
 IN_COLAB = os.path.exists("/var/colab/hostname")
 LAB2 = "/content/drive/Othercomputers/My Mac/data266-9067/Lab2"   # Drive-synced copy of this repo's Lab2/
@@ -36,13 +36,15 @@ print({"version": NOTEBOOK_VERSION, "commit": commit, "python": sys.version.spli
 # %%
 # Settings and the adapters to upload
 import json, hashlib
+import pandas as pd
 from pathlib import Path
 from huggingface_hub import HfApi
 OUT_DIR = Path("../outputs/p2")
 RUNS_ROOT = Path("/content/drive/MyDrive/DATA266_Lab2/p2/runs") if IN_COLAB else Path("../outputs/p2_drive/runs")
 STEPS = 5000                     # which training budget to upload (1500 = the v3 runs, kept on Drive)
 RUN_NAMES = [f"run1_lora_r4_s{STEPS}", f"run2_lora_r32_s{STEPS}"] if STEPS != 1500 else ["run1_lora_r4", "run2_lora_r32"]
-PRIVATE = True
+PRIVATE = False                  # public for grading; the cards limit use to non-commercial research
+DATASET_REPO = json.loads((OUT_DIR / "hf_dataset_link.json").read_text())["url"].removeprefix("https://huggingface.co/datasets/")
 REPO_PREFIX = "data266-lab2-naruto-sd15"
 
 def sha256(path):
@@ -117,7 +119,40 @@ The training images show copyrighted Naruto characters, so this adapter is for *
 teaching only**. The captions are short BLIP captions that never name the characters or the style, and most
 describe a man; generations inherit these biases.
 
+{results}
 Lineage: prompts SHA-256 `{prompts_sha}`, split SHA-256 `{split_sha}`, adapter SHA-256 `{w_sha}`.
+"""
+
+# Evaluation results from p2_generate_eval.ipynb (outputs/p2/): only the final run's card carries them
+final = json.loads((OUT_DIR / "final_run.json").read_text())
+res = pd.read_csv(OUT_DIR / "results_table.csv", index_col="model")
+FINAL_NAME = f"{final['final_run']}_s{STEPS}"          # eval names runs without the step suffix
+print("Final run (from final_run.json):", FINAL_NAME, "| rule:", final["rule"])
+
+def results_section(name):
+    if name != FINAL_NAME:
+        return (f"## Evaluation\nThis run was **not** selected as the final run; see the "
+                f"`{REPO_PREFIX}-{FINAL_NAME.replace('_', '-')}` repo for the evaluation.\n")
+    b, f = res.loc["base"], res.loc[final["final_run"]]
+    rows = [("KID, 20 in-domain images vs 122 test images (×10⁻³, lower is better)", "kid_in_domain_x1e3"),
+            ("KID, 122 test-caption images vs 122 test images (×10⁻³)", "kid_test_captions_x1e3"),
+            ("CLIP score, in-domain prompts", "clip_in_domain"), ("CLIP score, out-of-domain prompts", "clip_out_of_domain"),
+            ("CLIP score, compositional prompts", "clip_compositional"), ("LPIPS between seeds 0 and 1 (diversity)", "lpips_all"),
+            ("Safety-checker flag rate, test captions", "nsfw_flag_rate_test_captions")]
+    table = "\n".join(f"| {label} | {b[col]:g} | {f[col]:g} |" for label, col in rows)
+    return f"""## Evaluation (selected as the final run)
+Chosen by a rule fixed before evaluation: {final['rule']}. 40 images per model (20 prompts × seeds 0, 1), DPM-Solver++
+30 steps, guidance 7.5, 512 × 512; 122 more images per model from the test captions for KID.
+
+| Metric | Base SD 1.5 | This adapter |
+|---|---|---|
+{table}
+
+The Stable Diffusion safety checker flags a large share of this adapter's outputs as NSFW (base: none). A team audit
+of the 14 flagged images in the 120-image set found only false positives (clothed characters, abstract creatures);
+keep the checker on and expect some black images. CLIP score favours photographic images, so part of the lower
+in-domain CLIP score reflects the anime style. Failure modes: prompts with two or three characters often lose a
+character or mix their attributes.
 """
 
 # %%
@@ -129,7 +164,8 @@ for name, r in runs.items():
     card = CARD.format(repo=repo, rank=m["rank"], diffusers=m["diffusers"], peft=m["peft"], rev=m["dataset_revision"][:12],
                        n_train=m["train_images"], params=m["trainable_params"], steps=m["steps"], batch=m["batch_size"],
                        accum=m["grad_accum"], lr=m["learning_rate"], gpu=m["gpu"], minutes=round(m["train_seconds"] / 60, 1),
-                       prompts_sha=m["prompts_sha256"][:16], split_sha=m["split_sha256"][:16], w_sha=r["weights_sha256"][:16])
+                       prompts_sha=m["prompts_sha256"][:16], split_sha=m["split_sha256"][:16], w_sha=r["weights_sha256"][:16],
+                       results=results_section(name))
     (r["dir"] / "README.md").write_text(card)
     info = api.upload_folder(repo_id=repo, folder_path=str(r["dir"]),
                              allow_patterns=["pytorch_lora_weights.safetensors", "run_meta.json", "README.md"],
@@ -146,6 +182,26 @@ for name, l in links.items():
     got = hf_hub_download(repo, "pytorch_lora_weights.safetensors", revision=l["commit"], token=token)
     assert sha256(got) == l["weights_sha256"], f"{name}: downloaded adapter differs from the Drive copy"
     print(name, "download matches the Drive copy")
+
+# %%
+# Visibility: apply PRIVATE to both adapter repos and the image dataset, then check them without a token
+import requests
+def set_private(repo_id, repo_type):
+    if hasattr(api, "update_repo_settings"): api.update_repo_settings(repo_id, private=PRIVATE, repo_type=repo_type)
+    else: api.update_repo_visibility(repo_id, private=PRIVATE, repo_type=repo_type)
+targets = [(l["url"].removeprefix("https://huggingface.co/"), "model") for l in links.values()] + [(DATASET_REPO, "dataset")]
+for repo_id, repo_type in targets:
+    set_private(repo_id, repo_type)
+    api_url = f"https://huggingface.co/api/{'datasets/' if repo_type == 'dataset' else 'models/'}{repo_id}"
+    code = requests.get(api_url, timeout=30).status_code          # anonymous request: 200 = public, 401 = private
+    print(f"{repo_type:7s} {repo_id}: anonymous HTTP {code}")
+    assert (code == 200) != PRIVATE, f"{repo_id}: visibility did not change"
+if not PRIVATE:   # a grader without a token can download the final adapter
+    got = hf_hub_download(links[FINAL_NAME]["url"].removeprefix("https://huggingface.co/"),
+                          "pytorch_lora_weights.safetensors", revision=links[FINAL_NAME]["commit"], token=False)
+    assert sha256(got) == links[FINAL_NAME]["weights_sha256"]
+    print("Anonymous download of the final adapter matches the Drive copy")
+for l in links.values(): l["private"] = PRIVATE
 (OUT_DIR / f"hf_links_s{STEPS}.json").write_text(json.dumps(links, indent=1))
 print("Wrote", OUT_DIR / f"hf_links_s{STEPS}.json")
 

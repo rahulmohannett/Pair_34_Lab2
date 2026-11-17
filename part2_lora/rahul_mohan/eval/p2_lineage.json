@@ -1,0 +1,27 @@
+{
+ "hash_method": "SHA-256 of the JSON list of [id, type, prompt] rows, sorted, compact separators, UTF-8",
+ "fixed_prompts": {
+  "rows": 10,
+  "types": "5 out_of_domain + 5 compositional",
+  "sha256": "0e87830e15ef57a9a8163f38adaf67641dee1fc80e99a29efb2f74c617ed921e",
+  "hashed_at_utc": "2026-11-12T01:25:40+00:00",
+  "note": "written by hand before the dataset was downloaded or any model was trained"
+ },
+ "all_prompts": {
+  "rows": 20,
+  "in_domain": "10 test captions drawn with seed 266",
+  "sha256": "5b587498de357aea73c684ec22b69d8013adafc0240e37ba21197bd6da11650f",
+  "hashed_at_utc": "2026-11-12T01:39:31+00:00",
+  "runs_finished_when_hashed": []
+ },
+ "split": {
+  "dataset": "lambdalabs/naruto-blip-captions",
+  "revision": "1ed13e8ef280bd45e3bbac4cfa8bbd9d64ec9f89",
+  "seed": 266,
+  "train": 1099,
+  "test": 122,
+  "sha256": "62516f7de0fc9b6c0e645aa6124cd1763a1030adb7e44c271aa4b901ac2d6457",
+  "hashed_at_utc": "2026-11-12T01:39:31+00:00",
+  "runs_finished_when_hashed": []
+ }
+}

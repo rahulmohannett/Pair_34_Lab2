@@ -1,0 +1,7 @@
+question,type,mean,size
+prompt_better,compositional,0.458,24
+prompt_better,in_domain,0.091,33
+prompt_better,out_of_domain,0.333,18
+style_better,compositional,0.917,24
+style_better,in_domain,0.909,33
+style_better,out_of_domain,0.611,18

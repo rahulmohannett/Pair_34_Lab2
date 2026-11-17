@@ -27,7 +27,7 @@
 
 # %%
 # Cell 1 - run information (required)
-NOTEBOOK_VERSION = "p2-gen-eval-v4 2026-11-12: all 40/122 images scored (audited checker-off copies for flagged ones); filtered row kept"
+NOTEBOOK_VERSION = "p2-gen-eval-v4.1 2026-11-16: v4 + human-eval win rates by prompt type and rater agreement"
 import os
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 import subprocess, sys, random, numpy as np, torch
@@ -554,22 +554,44 @@ print("Wrote", HE_DIR / "pairs.html", "| A is the final run in", sum(r["A"] == F
 
 # %%
 # Human evaluation results (runs again after the rater files are added)
+# Win rate = share of pairs where the rater picked the final run. Also split by prompt type (the style question is
+# expected to be weak on out-of-domain prompts) and inter-rater agreement (same pick for the same pair).
 key = pd.read_csv(HE_DIR / "key.csv")
+key["type"] = key.prompt_id.map(prompts.set_index("id").type)
 raters = sorted(p for p in HE_DIR.glob("rater_*.csv") if p.name != "rater_TEMPLATE.csv")
 if not raters:
     print("No rater files yet. Add outputs/p2/human_eval/rater_<name>.csv (at least 3) and run this cell again.")
 else:
-    he = []
+    picks = []                                            # one row per rater x pair x question
     for p in raters:
         r = pd.read_csv(p).merge(key, on="pair")
         for q in ("style_better", "prompt_better"):
             ans = r[q].astype(str).str.strip().str.upper()
-            win = np.where(ans == "A", r["A"], np.where(ans == "B", r["B"], None)) == FINAL_RUN
-            he.append({"rater": p.stem[6:], "question": q, "answered": int(ans.isin(["A", "B"]).sum()),
-                       "final_run_win_rate": round(float(win[ans.isin(["A", "B"])].mean()), 3)})
-    he = pd.DataFrame(he); he.to_csv(OUT_DIR / "human_eval_results.csv", index=False)
-    print(he.pivot(index="rater", columns="question", values="final_run_win_rate"))
-    print("Mean win rate of", FINAL_RUN, "over base:", he.groupby("question").final_run_win_rate.mean().round(3).to_dict())
+            for (_, row), a in zip(r.iterrows(), ans):
+                if a in ("A", "B"):
+                    picks.append({"rater": p.stem[6:], "question": q, "pair": row.pair, "type": row.type,
+                                  "final_wins": (row.A if a == "A" else row.B) == FINAL_RUN})
+    picks = pd.DataFrame(picks); picks.to_csv(OUT_DIR / "human_eval_picks.csv", index=False)
+    print(f"{picks.rater.nunique()} raters:", sorted(picks.rater.unique()), "| answers per rater and question:",
+          picks.groupby(["rater", "question"]).size().unique().tolist())
+    he = picks.groupby(["rater", "question"]).final_wins.mean().unstack().round(3)
+    print(f"\nWin rate of {FINAL_RUN} over base, per rater:"); print(he)
+    by_type = picks.groupby(["question", "type"]).final_wins.agg(["mean", "size"]).round(3)
+    print("\nWin rate by prompt type (all raters pooled; size = rater x pair answers):"); print(by_type)
+    agree = []
+    for q, g in picks.groupby("question"):
+        w = g.pivot(index="pair", columns="rater", values="final_wins")
+        cols = list(w.columns)
+        pairwise = [float((w[x] == w[y]).mean()) for i, x in enumerate(cols) for y in cols[i + 1:]]
+        agree.append({"question": q, "mean_pairwise_agreement": round(float(np.mean(pairwise)), 3),
+                      "all_raters_agree": round(float((w.nunique(axis=1) == 1).mean()), 3),
+                      "majority_win_rate": round(float((w.mean(axis=1) > 0.5).mean()), 3)})
+    agree = pd.DataFrame(agree).set_index("question")
+    print("\nAgreement:"); print(agree)
+    summary = he.mean().round(3).rename("mean_win_rate").to_frame().join(agree)
+    summary.to_csv(OUT_DIR / "human_eval_results.csv")
+    by_type.to_csv(OUT_DIR / "human_eval_by_type.csv")
+    print("\nMean win rate of", FINAL_RUN, "over base:", summary.mean_win_rate.to_dict())
 
 # %% [markdown]
 # ## Upload the 120 images to a Hugging Face dataset

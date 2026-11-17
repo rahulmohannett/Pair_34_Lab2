@@ -1,0 +1,4 @@
+{
+ "final_run": "run1_lora_r4",
+ "rule": "auto: lower kid_test_captions_x1e3"
+}

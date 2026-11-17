@@ -1,0 +1,14 @@
+{
+ "run1_lora_r4": {
+  "url": "https://huggingface.co/rahulmohannett/data266-lab2-naruto-sd15-run1-lora-r4",
+  "commit": "f02279877cc1459012053dd941fd7b1dd55bc517",
+  "private": true,
+  "weights_sha256": "aadb80848c345a1baebf480d49fa43f8d00cdea81f425ead2b88541da4af9761"
+ },
+ "run2_lora_r32": {
+  "url": "https://huggingface.co/rahulmohannett/data266-lab2-naruto-sd15-run2-lora-r32",
+  "commit": "775f0e8359b636282657fa74ec257b97b065a86b",
+  "private": true,
+  "weights_sha256": "d975540ba14c2de256abedd4ab205a8f957cdd9d6d0d8fdd834fec15b13557f1"
+ }
+}

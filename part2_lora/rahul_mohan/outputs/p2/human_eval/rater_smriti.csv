@@ -1,0 +1,26 @@
+pair,prompt,style_better,prompt_better,style_answered_at,prompt_answered_at,rater,started_at,saved_at,pack_id
+1,a woman with glasses and a white hair,A,B,2026-11-13T18:05:41-08:00,2026-11-13T18:05:57-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+2,a golden retriever puppy running on a beach at sunset,B,A,2026-11-13T18:07:03-08:00,2026-11-13T18:06:27-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+3,a man with black hair and a hoodie,A,B,2026-11-13T18:07:07-08:00,2026-11-13T18:07:18-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+4,a photograph of a red double-decker bus on a rainy city street,B,A,2026-11-13T18:07:36-08:00,2026-11-13T18:07:41-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+5,a ninja in an orange jacket riding a blue dragon above a village,B,B,2026-11-13T18:09:24-08:00,2026-11-13T18:09:25-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+6,a cat that is looking at the camera,B,A,2026-11-13T18:09:38-08:00,2026-11-13T18:09:42-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+7,a man in a purple outfit standing in front of trees,B,B,2026-11-13T18:09:49-08:00,2026-11-13T18:09:56-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+8,"three characters: one holding a sword, one holding a book and one holding a cat",A,B,2026-11-13T18:10:05-08:00,2026-11-13T18:10:37-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+9,an oil painting of a bowl of fruit on a wooden table,B,B,2026-11-13T18:10:51-08:00,2026-11-13T18:10:52-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+10,a man with white hair standing to the left of a woman with a red scarf,B,A,2026-11-13T18:10:56-08:00,2026-11-13T18:11:34-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+11,a man with black hair and a hoodie,A,B,2026-11-13T18:11:43-08:00,2026-11-13T18:11:44-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+12,"two ninja characters standing side by side, one wearing red and one wearing blue",A,A,2026-11-13T18:12:45-08:00,2026-11-13T18:13:07-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+13,a plate of spaghetti with tomato sauce seen from above,B,B,2026-11-13T18:13:33-08:00,2026-11-13T18:13:35-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+14,a man in a black shirt and a black vest,A,B,2026-11-13T18:13:48-08:00,2026-11-13T18:14:20-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+15,a man in a purple outfit standing in front of trees,A,B,2026-11-13T18:14:24-08:00,2026-11-13T18:14:40-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+16,a man with white hair standing to the left of a woman with a red scarf,B,B,2026-11-13T18:15:04-08:00,2026-11-13T18:15:08-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+17,a girl with long brown hair and glasses,A,B,2026-11-13T18:15:12-08:00,2026-11-13T18:15:20-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+18,"three characters: one holding a sword, one holding a book and one holding a cat",B,A,2026-11-13T18:15:50-08:00,2026-11-13T18:15:52-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+19,a demon with a gun in his hand,A,A,2026-11-13T18:16:01-08:00,2026-11-13T18:16:02-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+20,a ninja in an orange jacket riding a blue dragon above a village,A,A,2026-11-13T18:16:25-08:00,2026-11-13T18:16:27-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+21,a plate of spaghetti with tomato sauce seen from above,A,A,2026-11-13T18:16:37-08:00,2026-11-13T18:16:44-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+22,a man in a white hoodie looking at the camera,A,A,2026-11-13T18:16:54-08:00,2026-11-13T18:17:01-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+23,a man in a red and yellow outfit,B,A,2026-11-13T18:17:12-08:00,2026-11-13T18:17:13-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+24,a golden retriever puppy running on a beach at sunset,A,B,2026-11-13T18:17:25-08:00,2026-11-13T18:17:25-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766
+25,"two ninja characters standing side by side, one wearing red and one wearing blue",B,B,2026-11-13T18:17:49-08:00,2026-11-13T18:17:53-08:00,Smriti,2026-11-13T18:05:41-08:00,2026-11-13T18:18:02-08:00,2a7b49507766

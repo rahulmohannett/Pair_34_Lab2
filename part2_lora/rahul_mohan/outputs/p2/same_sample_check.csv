@@ -1,0 +1,7 @@
+model,file,mean_abs_diff_0_255,max_abs_diff_0_255
+run1_lora_r4,run1_lora_r4__p01__seed0.png,0.296,20
+run1_lora_r4,run1_lora_r4__p01__seed1.png,0.384,60
+run1_lora_r4,run1_lora_r4__p02__seed1.png,0.286,16
+run2_lora_r32,run2_lora_r32__p01__seed0.png,0.198,10
+run2_lora_r32,run2_lora_r32__p01__seed1.png,0.114,4
+run2_lora_r32,run2_lora_r32__p02__seed1.png,1.346,104

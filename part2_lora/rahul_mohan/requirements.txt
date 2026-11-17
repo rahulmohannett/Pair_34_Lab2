@@ -1,0 +1,21 @@
+# Part 2 (LoRA fine-tuning of Stable Diffusion 1.5). Runs on Colab, GPU L4 (24 GB), Python 3.13.16, torch 2.14.1+cu130
+# (printed in Cell 1 of each notebook). Versions of the graded runs on 2026-11-11 / 2026-11-12.
+# The notebooks install the missing ones themselves and uninstall Colab's torchao 0.10.0 (it breaks peft).
+diffusers==0.42.1        # training script: examples/text_to_image/train_text_to_image_lora.py at tag v0.42.1
+peft==0.21.2
+accelerate==1.15.0
+torchmetrics==1.9.0      # KID
+torch-fidelity           # Inception weights for KID
+lpips                    # diversity (AlexNet)
+# Preinstalled in the Colab image used for the runs:
+torch==2.14.1
+transformers==5.22.1     # CLIP ViT-L/14 for CLIP score and memorization
+datasets
+huggingface_hub
+tensorboard              # training loss curves
+pandas
+numpy
+pillow
+matplotlib
+# Models and data (Hugging Face): stable-diffusion-v1-5/stable-diffusion-v1-5, openai/clip-vit-large-patch14,
+# lambdalabs/naruto-blip-captions (revision 1ed13e8ef280bd45e3bbac4cfa8bbd9d64ec9f89).

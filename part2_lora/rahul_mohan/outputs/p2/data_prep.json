@@ -1,0 +1,144 @@
+{
+ "images_kept": 1221,
+ "train": 1099,
+ "test": 122,
+ "original_sizes_top5": [
+  [
+   "1080x1080",
+   468
+  ],
+  [
+   "1076x1076",
+   135
+  ],
+  [
+   "1620x1620",
+   33
+  ],
+  [
+   "1050x1050",
+   30
+  ],
+  [
+   "540x540",
+   23
+  ]
+ ],
+ "non_square_originals": 0,
+ "caption_words_mean": 8.9,
+ "caption_words_min": 6,
+ "caption_words_max": 41,
+ "unique_captions": 967,
+ "caption_used_by_most_images": [
+  [
+   "a man with a sword in his hand",
+   35
+  ],
+  [
+   "a man with a gun in his hand",
+   12
+  ],
+  [
+   "two people standing next to each other people",
+   9
+  ]
+ ],
+ "captions_naming_naruto": 0,
+ "subject_words": {
+  "man": 690,
+  "woman": 175,
+  "person": 83,
+  "girl": 71,
+  "character": 46,
+  "group": 30,
+  "boy": 19
+ },
+ "top_words": [
+  [
+   "man",
+   692
+  ],
+  [
+   "hair",
+   465
+  ],
+  [
+   "shirt",
+   193
+  ],
+  [
+   "white",
+   192
+  ],
+  [
+   "eyes",
+   181
+  ],
+  [
+   "long",
+   181
+  ],
+  [
+   "black",
+   180
+  ],
+  [
+   "woman",
+   175
+  ],
+  [
+   "green",
+   142
+  ],
+  [
+   "blue",
+   137
+  ],
+  [
+   "hat",
+   126
+  ],
+  [
+   "red",
+   115
+  ],
+  [
+   "brown",
+   95
+  ],
+  [
+   "sword",
+   86
+  ],
+  [
+   "person",
+   83
+  ],
+  [
+   "hand",
+   83
+  ],
+  [
+   "hoodie",
+   79
+  ],
+  [
+   "jacket",
+   76
+  ],
+  [
+   "standing",
+   75
+  ],
+  [
+   "girl",
+   71
+  ]
+ ],
+ "removed": {
+  "corrupted": 0,
+  "exact_duplicates": 0,
+  "near_duplicates": 0
+ },
+ "revision": "1ed13e8ef280bd45e3bbac4cfa8bbd9d64ec9f89"
+}

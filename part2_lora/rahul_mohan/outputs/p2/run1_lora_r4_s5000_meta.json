@@ -1,0 +1,35 @@
+{
+ "name": "run1_lora_r4_s5000",
+ "rank": 4,
+ "sessions": [
+  {
+   "start_step": 0,
+   "seconds": 4079.0,
+   "peak_gpu_mem_mib": 4982,
+   "peak_loop_gpu_mem_mib": 3546,
+   "gpu": "NVIDIA L4",
+   "returncode": 0
+  }
+ ],
+ "finished": true,
+ "steps": 5000,
+ "learning_rate": 0.0001,
+ "batch_size": 1,
+ "grad_accum": 4,
+ "trainable_params": 797184,
+ "adapter_mb": 3.08,
+ "train_seconds": 4079.0,
+ "peak_gpu_mem_mib": 4982,
+ "peak_loop_gpu_mem_mib": 3546,
+ "gpu": "NVIDIA L4",
+ "base_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+ "seed": 266,
+ "mixed_precision": "fp16",
+ "train_images": 1099,
+ "prompts_sha256": "5b587498de357aea73c684ec22b69d8013adafc0240e37ba21197bd6da11650f",
+ "split_sha256": "62516f7de0fc9b6c0e645aa6124cd1763a1030adb7e44c271aa4b901ac2d6457",
+ "dataset": "lambdalabs/naruto-blip-captions",
+ "dataset_revision": "1ed13e8ef280bd45e3bbac4cfa8bbd9d64ec9f89",
+ "diffusers": "0.42.1",
+ "peft": "0.21.2"
+}

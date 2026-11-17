@@ -1,0 +1,9 @@
+{
+ "train_images": 0.05368516833484986,
+ "base": 0.175,
+ "base_test_captions": 0.01639344262295082,
+ "run1_lora_r4": 0.05,
+ "run1_lora_r4_test_captions": 0.0,
+ "run2_lora_r32": 0.075,
+ "run2_lora_r32_test_captions": 0.0
+}

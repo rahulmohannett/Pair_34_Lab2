@@ -1,0 +1,26 @@
+pair,prompt,style_better,prompt_better,style_answered_at,prompt_answered_at,rater,started_at,saved_at,pack_id
+1,a woman with glasses and a white hair,A,B,2026-11-12T13:19:02-08:00,2026-11-12T13:19:08-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+2,a golden retriever puppy running on a beach at sunset,B,B,2026-11-12T13:27:06-08:00,2026-11-12T13:27:08-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+3,a man with black hair and a hoodie,A,B,2026-11-12T13:19:59-08:00,2026-11-12T13:20:05-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+4,a photograph of a red double-decker bus on a rainy city street,A,A,2026-11-12T13:27:13-08:00,2026-11-12T13:27:19-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+5,a ninja in an orange jacket riding a blue dragon above a village,B,B,2026-11-12T13:27:29-08:00,2026-11-12T13:27:30-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+6,a cat that is looking at the camera,A,B,2026-11-12T13:27:35-08:00,2026-11-12T13:27:35-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+7,a man in a purple outfit standing in front of trees,B,A,2026-11-12T13:20:48-08:00,2026-11-12T13:20:49-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+8,"three characters: one holding a sword, one holding a book and one holding a cat",A,A,2026-11-12T13:27:43-08:00,2026-11-12T13:27:45-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+9,an oil painting of a bowl of fruit on a wooden table,A,A,2026-11-12T13:21:25-08:00,2026-11-12T13:21:35-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+10,a man with white hair standing to the left of a woman with a red scarf,B,A,2026-11-12T13:21:53-08:00,2026-11-12T13:21:54-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+11,a man with black hair and a hoodie,A,B,2026-11-12T13:22:02-08:00,2026-11-12T13:22:11-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+12,"two ninja characters standing side by side, one wearing red and one wearing blue",A,A,2026-11-12T13:22:22-08:00,2026-11-12T13:22:23-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+13,a plate of spaghetti with tomato sauce seen from above,A,A,2026-11-12T13:28:02-08:00,2026-11-12T13:22:35-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+14,a man in a black shirt and a black vest,A,B,2026-11-12T13:22:45-08:00,2026-11-12T13:22:46-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+15,a man in a purple outfit standing in front of trees,A,B,2026-11-12T13:22:55-08:00,2026-11-12T13:22:56-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+16,a man with white hair standing to the left of a woman with a red scarf,B,B,2026-11-12T13:23:09-08:00,2026-11-12T13:23:10-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+17,a girl with long brown hair and glasses,A,B,2026-11-12T13:23:17-08:00,2026-11-12T13:23:22-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+18,"three characters: one holding a sword, one holding a book and one holding a cat",B,A,2026-11-12T13:23:31-08:00,2026-11-12T13:23:35-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+19,a demon with a gun in his hand,B,A,2026-11-12T13:23:46-08:00,2026-11-12T13:23:46-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+20,a ninja in an orange jacket riding a blue dragon above a village,A,A,2026-11-12T13:23:52-08:00,2026-11-12T13:23:54-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+21,a plate of spaghetti with tomato sauce seen from above,B,A,2026-11-12T13:24:04-08:00,2026-11-12T13:24:04-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+22,a man in a white hoodie looking at the camera,B,A,2026-11-12T13:24:09-08:00,2026-11-12T13:24:10-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+23,a man in a red and yellow outfit,B,A,2026-11-12T13:24:16-08:00,2026-11-12T13:24:17-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+24,a golden retriever puppy running on a beach at sunset,B,B,2026-11-12T13:28:10-08:00,2026-11-12T13:24:35-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766
+25,"two ninja characters standing side by side, one wearing red and one wearing blue",A,B,2026-11-12T13:24:43-08:00,2026-11-12T13:24:48-08:00,Rahul,2026-11-12T13:19:02-08:00,2026-11-12T13:28:13-08:00,2a7b49507766

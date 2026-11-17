@@ -1,0 +1,5 @@
+set,model,flagged
+kid_test_captions,run1_lora_r4,44
+kid_test_captions,run2_lora_r32,48
+main,run1_lora_r4,5
+main,run2_lora_r32,9

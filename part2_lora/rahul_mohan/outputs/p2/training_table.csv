@@ -1,0 +1,3 @@
+run,method,trainable_params,share_of_unet_%,learning_rate,steps,batch_size,peak_gpu_mem_gib_training,peak_gpu_mem_gib_incl_save,train_minutes,gpu_hours,sessions,gpu,adapter_mb
+run1_lora_r4_s5000,LoRA rank 4,797184,0.093,0.0001,5000,1 x 4 accumulation,3.46,4.87,68.0,1.133,1,NVIDIA L4,3.08
+run2_lora_r32_s5000,LoRA rank 32,6377472,0.742,0.0001,5000,1 x 4 accumulation,3.56,4.96,68.6,1.143,1,NVIDIA L4,24.36

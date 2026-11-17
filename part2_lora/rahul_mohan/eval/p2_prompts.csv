@@ -1,0 +1,21 @@
+id,type,prompt
+p01,in_domain,a cat that is looking at the camera
+p02,in_domain,a demon with a gun in his hand
+p03,in_domain,a girl with long brown hair and glasses
+p04,in_domain,a man in a black shirt and a black vest
+p05,in_domain,a man in a purple outfit standing in front of trees
+p06,in_domain,a man in a red and yellow outfit
+p07,in_domain,a man in a white hoodie looking at the camera
+p08,in_domain,a man with black hair and a hoodie
+p09,in_domain,a person with long hair and green eyes
+p10,in_domain,a woman with glasses and a white hair
+p11,out_of_domain,a photograph of a red double-decker bus on a rainy city street
+p12,out_of_domain,an oil painting of a bowl of fruit on a wooden table
+p13,out_of_domain,a golden retriever puppy running on a beach at sunset
+p14,out_of_domain,a modern glass skyscraper under a clear blue sky
+p15,out_of_domain,a plate of spaghetti with tomato sauce seen from above
+p16,compositional,"two ninja characters standing side by side, one wearing red and one wearing blue"
+p17,compositional,a girl with pink hair holding a green umbrella next to a boy with black hair
+p18,compositional,a man with white hair standing to the left of a woman with a red scarf
+p19,compositional,a ninja in an orange jacket riding a blue dragon above a village
+p20,compositional,"three characters: one holding a sword, one holding a book and one holding a cat"

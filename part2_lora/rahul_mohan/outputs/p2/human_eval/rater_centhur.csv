@@ -1,0 +1,26 @@
+pair,prompt,style_better,prompt_better,style_answered_at,prompt_answered_at,rater,started_at,saved_at,pack_id
+1,a woman with glasses and a white hair,A,B,2026-11-15T10:41:27-08:00,2026-11-15T10:41:28-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+2,a golden retriever puppy running on a beach at sunset,A,A,2026-11-15T10:41:30-08:00,2026-11-15T10:41:31-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+3,a man with black hair and a hoodie,A,B,2026-11-15T10:41:33-08:00,2026-11-15T10:41:33-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+4,a photograph of a red double-decker bus on a rainy city street,A,A,2026-11-15T10:41:35-08:00,2026-11-15T10:41:36-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+5,a ninja in an orange jacket riding a blue dragon above a village,B,B,2026-11-15T10:41:39-08:00,2026-11-15T10:41:39-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+6,a cat that is looking at the camera,B,B,2026-11-15T10:41:41-08:00,2026-11-15T10:41:41-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+7,a man in a purple outfit standing in front of trees,B,A,2026-11-15T10:41:44-08:00,2026-11-15T10:41:44-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+8,"three characters: one holding a sword, one holding a book and one holding a cat",A,B,2026-11-15T10:41:46-08:00,2026-11-15T10:41:53-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+9,an oil painting of a bowl of fruit on a wooden table,B,A,2026-11-15T10:41:55-08:00,2026-11-15T10:41:55-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+10,a man with white hair standing to the left of a woman with a red scarf,B,A,2026-11-15T10:42:01-08:00,2026-11-15T10:42:02-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+11,a man with black hair and a hoodie,A,B,2026-11-15T10:42:04-08:00,2026-11-15T10:42:04-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+12,"two ninja characters standing side by side, one wearing red and one wearing blue",B,A,2026-11-15T10:42:06-08:00,2026-11-15T10:42:07-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+13,a plate of spaghetti with tomato sauce seen from above,A,A,2026-11-15T10:42:08-08:00,2026-11-15T10:42:09-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+14,a man in a black shirt and a black vest,A,B,2026-11-15T10:42:10-08:00,2026-11-15T10:42:11-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+15,a man in a purple outfit standing in front of trees,A,B,2026-11-15T10:42:15-08:00,2026-11-15T10:42:18-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+16,a man with white hair standing to the left of a woman with a red scarf,B,A,2026-11-15T10:42:16-08:00,2026-11-15T10:42:19-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+17,a girl with long brown hair and glasses,A,B,2026-11-15T10:42:21-08:00,2026-11-15T10:42:21-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+18,"three characters: one holding a sword, one holding a book and one holding a cat",B,A,2026-11-15T10:42:23-08:00,2026-11-15T10:42:24-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+19,a demon with a gun in his hand,B,A,2026-11-15T10:42:26-08:00,2026-11-15T10:42:27-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+20,a ninja in an orange jacket riding a blue dragon above a village,A,B,2026-11-15T10:42:28-08:00,2026-11-15T10:42:29-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+21,a plate of spaghetti with tomato sauce seen from above,B,B,2026-11-15T10:42:30-08:00,2026-11-15T10:42:31-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+22,a man in a white hoodie looking at the camera,B,A,2026-11-15T10:42:34-08:00,2026-11-15T10:42:34-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+23,a man in a red and yellow outfit,B,A,2026-11-15T10:42:36-08:00,2026-11-15T10:42:37-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+24,a golden retriever puppy running on a beach at sunset,A,A,2026-11-15T10:42:38-08:00,2026-11-15T10:42:39-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
+25,"two ninja characters standing side by side, one wearing red and one wearing blue",A,B,2026-11-15T10:42:40-08:00,2026-11-15T10:42:41-08:00,Centhur,2026-11-15T10:41:27-08:00,2026-11-15T10:42:44-08:00,2a7b49507766
