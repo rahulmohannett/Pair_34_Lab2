@@ -18,8 +18,12 @@ part2_lora/         # Stable Diffusion 1.5 LoRA fine-tuning
   rahul_mohan/
     notebooks/p2_train.ipynb          # LoRA r4 and r32 training (executed)
     notebooks/p2_generate_eval.ipynb  # generation and evaluation (executed)
-    notebooks/p2_push_hf.ipynb        # Hugging Face upload
+    notebooks/p2_push_hf.ipynb        # Hugging Face upload (executed): adapters, model cards, public access check
     src/                              # notebook sources + rater app
+    eval/                             # 20 prompts, 90/10 split, lineage hashes (fixed before training)
+    outputs/p2/                       # results and training tables, figures, human-eval files, HF links
+                                      # (see part2_lora/rahul_mohan/README.md)
+    requirements.txt                  # versions used for the Part 2 runs
 part3_agents/       # five-agent image understanding + generation system (LangGraph, Gradio)
   rahul_mohan/
     notebooks/p3_agents.ipynb   # executed Colab T4 run: 15 scenarios, 10 red-team cases, results table, app
