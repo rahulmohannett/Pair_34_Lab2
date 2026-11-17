@@ -1,6 +1,6 @@
 {
- "stamp": "20261116_0628_golden",
- "notebook_version": "p1-v3.9 2026-11-15: v3.5 plus lookups for a span of years and for two groups compared; answers state the values they rest on and the forecasts those replace",
+ "stamp": "20261117_1703_golden",
+ "notebook_version": "p1-v3.16 2026-11-17: v3.15 plus: the table of every value in the answer's calculation is referenced; a refused permanent change references no figure",
  "hardware": {
   "gpu": "Tesla T4\nTesla T4",
   "gpu_mem": "15360 MiB\n15360 MiB",
@@ -17,7 +17,7 @@
  "text_precision": "4bit",
  "focused_readings": 6,
  "model_copies": 1,
- "wall_min": 17.300035278002422,
+ "wall_min": 16.96380788485209,
  "reranker": "BAAI/bge-reranker-base",
  "top_k": 12,
  "fact_lookup": false,
@@ -51,13 +51,13 @@
    "1": 1.01
   },
   "memory_fit_tokens": 38617,
-  "prompt_tokens_per_s": 523
+  "prompt_tokens_per_s": 536
  },
  "context_trimmed": 0,
  "small_gpu": false,
  "baseline": true,
- "median_s": 40.495293617248535,
- "total_min": 17.299103033542632,
+ "median_s": 40.12960767745972,
+ "total_min": 16.962882852554323,
  "status_counts": {
   "answered": 20,
   "session_override": 3,

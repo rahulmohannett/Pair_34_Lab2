@@ -17,7 +17,7 @@ question_id               category  answer  status  figures  citations  total
         G16             multi_turn    1.00     1.0     1.00       1.00   1.00
         G17             multi_turn    1.00     1.0     0.67       0.67   0.87
         G18             multi_turn    1.00     1.0     1.00       1.00   1.00
-        G19             multi_turn    1.00     1.0     1.00       1.00   1.00
+        G19             multi_turn    1.00     1.0     0.00       1.00   0.80
         G20    conflicts_revisions    1.00     1.0     1.00       0.94   0.99
         G21    conflicts_revisions    1.00     1.0     1.00       1.00   1.00
         G22    conflicts_revisions    1.00     1.0     0.67       0.77   0.89
@@ -31,9 +31,9 @@ category
 conflicts_revisions      1.000     1.0    0.889      0.906  0.959
 facts_tables             0.900     1.0    1.000      1.000  0.960
 figures                  0.861     1.0    0.917      0.937  0.915
-multi_turn               1.000     1.0    0.933      0.933  0.973
+multi_turn               1.000     1.0    0.733      0.933  0.933
 two_sources              1.000     1.0    1.000      1.000  1.000
 unanswerable_injection   1.000     1.0    1.000      1.000  1.000
 
-mean: {'answer': 0.947, 'status': 1.0, 'figures': 0.953, 'citations': 0.96, 'total': 0.961}
+mean: {'answer': 0.947, 'status': 1.0, 'figures': 0.913, 'citations': 0.96, 'total': 0.953}
 correct (all facts + right status): 22/25
