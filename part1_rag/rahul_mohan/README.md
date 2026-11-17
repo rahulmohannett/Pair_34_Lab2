@@ -28,6 +28,11 @@ references, following the lab's answering rules. Open models only; no hosted API
    `p1_ratings_A.csv` / `p1_ratings_B.csv`; the Combine tab writes `p1_groundedness_ratings.csv` for `eval/`.
    Rerun `notebooks/p1_eval.ipynb`.
 
+Kaggle runs a notebook outside a Git checkout, so Cell 1 of the three Kaggle notebooks prints an empty `commit`;
+it prints the code version instead (`p1-v3.16`). Their code is identical to the notebooks at tag `p1-v1.0`.
+The dev questions we used while tuning are not in this repository; the golden set was never used for tuning
+decisions before it was committed.
+
 ## Source files
 
 Each notebook is built from a plain source file with cells separated by `# %%`:
