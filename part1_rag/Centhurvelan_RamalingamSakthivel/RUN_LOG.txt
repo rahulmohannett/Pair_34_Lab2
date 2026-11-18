@@ -1,0 +1,30 @@
+DATA 266 Lab 2 — Part 1 Run Log
+================================
+
+Package inspection date: 2026-11-18
+
+The Part 1 source package was inspected and organized for GitHub upload.
+
+Verified package contents:
+- notebooks/p1_rag.ipynb
+- src/p1_rag_source.py
+- src/build_notebook.py
+- src/score_p1.py
+- src/prompts/sufficient_context_autorater.txt
+- data/part1/Questions.csv
+- data/part1/kb_manifest.json
+- data/part1/sample_submission.csv
+- data/part1/validate_submission.py
+- three source PDF documents
+
+Execution status:
+- The ZIP archive did not contain saved notebook outputs.
+- No runtime metrics, timing, GPU details, or final submission score are claimed here.
+
+After running the notebook, append:
+- timestamp
+- Python/PyTorch/Transformers versions
+- GPU name
+- successful cell completion or error details
+- output paths
+- final validation and scoring results
