@@ -1,0 +1,10 @@
+{
+  "run1_lora_r4_s5000": {
+    "url": "https://huggingface.co/Centhur/data266-lab2-naruto-sd15-run1-lora-r4-s5000",
+    "commit": "main"
+  },
+  "run2_lora_r32_s5000": {
+    "url": "https://huggingface.co/Centhur/data266-lab2-naruto-sd15-run2-lora-r32-s5000",
+    "commit": "main"
+  }
+}

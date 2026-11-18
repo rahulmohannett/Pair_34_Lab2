@@ -1,0 +1,21 @@
+# Part 3 (multi-agent image system). Runs on Colab, GPU T4 (16 GB), Python 3.13.16, torch 2.14.1+cu130 (printed in Cell 1).
+# Versions of the graded run on 2026-11-14 (logged by the notebook in outputs/p3/run_info.json -> lib_versions).
+# The notebook installs the pinned ones itself if they are missing.
+langgraph==1.2.19
+gradio==6.31.0
+qwen-vl-utils==0.0.11
+diffusers==0.42.1
+peft==0.21.2
+# Preinstalled in the Colab image used for the run:
+torch==2.14.1
+transformers==5.22.1
+pydantic==2.14.2
+bitsandbytes==0.50.2      # the notebook upgrades it on Colab to match the runtime's CUDA (logged version above)
+accelerate
+scikit-image
+pandas
+numpy
+pillow
+# Models (open weights, Hugging Face): Qwen/Qwen2.5-VL-7B-Instruct (4-bit NF4), stable-diffusion-v1-5/stable-diffusion-v1-5,
+# timbrooks/instruct-pix2pix, openai/clip-vit-large-patch14, CompVis/stable-diffusion-safety-checker, and our Part 2 LoRA
+# rahulmohannett/data266-lab2-naruto-sd15-run2-lora-r32-s5000 (revision 99435a0). No hosted API is used.

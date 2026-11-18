@@ -1,0 +1,42 @@
+{
+ "config": {
+  "version": "p3-v2 2026-11-14: general fixes after the first run (critic decision rule, style prompts, routing defs, deceptive-edit check)",
+  "vlm": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "base": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+  "edit": "timbrooks/instruct-pix2pix",
+  "clip": "openai/clip-vit-large-patch14",
+  "lora": "Centhur/data266-lab2-naruto-sd15-run2-lora-r32-s5000@main",
+  "gen": {
+   "steps": 30,
+   "guidance": 7.5,
+   "size": 512,
+   "style_strength": 0.7,
+   "domain_strength": 0.65,
+   "edit_image_guidance": 1.5,
+   "lora_scale": 1.0
+  },
+  "max_revisions": 2,
+  "clip_accept": 22.0,
+  "min_side": 64,
+  "seed": 266
+ },
+ "config_hash": "8c270bd1ee29",
+ "eval_hash": {
+  "scenarios": "c0735f470b98",
+  "redteam": "d59d584a5ca4"
+ },
+ "lib_versions": {
+  "transformers": "5.23.0",
+  "diffusers": "0.42.1",
+  "peft": "0.21.2",
+  "langgraph": "1.2.19",
+  "gradio": "6.31.0",
+  "pydantic": "2.14.3",
+  "bitsandbytes": "0.50.2"
+ },
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "commit": "",
+ "median_s_final": 15.02,
+ "median_s_baseline": 14.04,
+ "peak_gpu_gib": 9.31
+}

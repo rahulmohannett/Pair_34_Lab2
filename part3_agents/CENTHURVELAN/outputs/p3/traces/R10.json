@@ -1,0 +1,76 @@
+{
+ "request_id": "R10",
+ "request": "Turn this into a pencil sketch.",
+ "image_path": "..\\outputs\\p3_drive\\inputs\\file_random_bytes.jpg",
+ "use_critique": true,
+ "status": "error",
+ "message": "The file is not a readable image (it looks broken or truncated: UnidentifiedImageError). Please upload a valid image (PNG or JPEG, at least 64x64 px).",
+ "route": null,
+ "plan": {},
+ "image_info": {
+  "ok": false,
+  "has_image": true,
+  "problem": "The file is not a readable image (it looks broken or truncated: UnidentifiedImageError)."
+ },
+ "vision": {},
+ "prompt": {},
+ "attempts": [],
+ "revisions": 0,
+ "revision_instruction": null,
+ "final_image": null,
+ "trace": [
+  {
+   "agent": "planner",
+   "seconds": 0.0,
+   "input": {
+    "request": "Turn this into a pencil sketch.",
+    "image_path": "..\\outputs\\p3_drive\\inputs\\file_random_bytes.jpg",
+    "route": null,
+    "revisions": 0,
+    "revision_instruction": null
+   },
+   "output": {
+    "image_info": {
+     "ok": false,
+     "has_image": true,
+     "problem": "The file is not a readable image (it looks broken or truncated: UnidentifiedImageError)."
+    },
+    "status": "error",
+    "route": null,
+    "message": "The file is not a readable image (it looks broken or truncated: UnidentifiedImageError). Please upload a valid image (PNG or JPEG, at least 64x64 px)."
+   },
+   "error": null
+  },
+  {
+   "agent": "finalize",
+   "seconds": 0.0,
+   "input": {
+    "request": "Turn this into a pencil sketch.",
+    "image_path": "..\\outputs\\p3_drive\\inputs\\file_random_bytes.jpg",
+    "route": null,
+    "revisions": 0,
+    "revision_instruction": null
+   },
+   "output": {},
+   "error": null
+  }
+ ],
+ "total_seconds": 0.0,
+ "case_id": "R10",
+ "kind": "redteam",
+ "image_ref": "file:random_bytes",
+ "eval_hash": {
+  "scenarios": "c0735f470b98",
+  "redteam": "d59d584a5ca4"
+ },
+ "config_hash": "8c270bd1ee29",
+ "lib_versions": {
+  "transformers": "5.23.0",
+  "diffusers": "0.42.1",
+  "peft": "0.21.2",
+  "langgraph": "1.2.19",
+  "gradio": "6.31.0",
+  "pydantic": "2.14.3",
+  "bitsandbytes": "0.50.2"
+ }
+}
