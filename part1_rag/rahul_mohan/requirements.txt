@@ -5,7 +5,10 @@ rank_bm25==0.2.2
 chromadb==1.0.15
 sentence-transformers==5.0.0
 qwen-vl-utils==0.0.11
-# Preinstalled in the Kaggle image used for the final run (2026-11-15); the notebook requires transformers >= 4.49.
+# Preinstalled in the Kaggle GPU image (Python 3.13, torch 2.11.0+cu130) used for every Part 1 run, including the
+# final run of 2026-11-17. All Part 1 notebooks are built to run on Kaggle (GPU T4 x2, competition data attached),
+# where these packages come with the image; run them there. The notebook requires transformers >= 4.49 and
+# installs transformers==4.51.3 itself if the image has an older version.
 torch==2.11.0
 transformers>=4.49.0
 accelerate
