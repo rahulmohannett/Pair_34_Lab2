@@ -1,0 +1,4 @@
+model,kid_in_domain_x1e3,kid_in_domain_std_x1e3,kid_test_captions_x1e3,kid_test_captions_std_x1e3,clip_in_domain,clip_out_of_domain,clip_compositional,clip_all,lpips_all,images_scored,nsfw_flags_main,nsfw_flag_rate_test_captions,f_kid_in_domain_x1e3,f_kid_test_captions_x1e3,f_clip_all,f_lpips_all,f_images_scored,sec_per_image_median,train_gpu_hours,train_peak_gpu_gib,trainable_params
+base,134.95,12.34,121.92,3.29,26.12,28.88,28.43,27.39,0.794,40,0,0.0,134.95,121.92,27.39,0.794,40,0.75,0.0,,0
+run1_lora_r4,27.23,6.96,17.88,1.72,23.57,29.84,26.46,25.86,0.767,40,11,0.361,34.14,23.08,27.21,0.762,29,1.05,0.735,5.3,797184
+run2_lora_r32,16.6,5.84,6.37,0.81,22.9,29.35,27.3,25.61,0.746,40,5,0.328,24.69,5.82,25.85,0.74,35,1.03,0.746,5.3,6377472

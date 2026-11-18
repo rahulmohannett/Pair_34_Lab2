@@ -1,0 +1,121 @@
+model,id,type,prompt,seed,file,nsfw_flag,seconds,image_source
+base,p01,in_domain,a cat that is looking at the camera,0,base__p01__seed0.png,False,1.51,pipeline
+base,p01,in_domain,a cat that is looking at the camera,1,base__p01__seed1.png,False,0.82,pipeline
+base,p02,in_domain,a demon with a gun in his hand,0,base__p02__seed0.png,False,0.79,pipeline
+base,p02,in_domain,a demon with a gun in his hand,1,base__p02__seed1.png,False,0.76,pipeline
+base,p03,in_domain,a girl with long brown hair and glasses,0,base__p03__seed0.png,False,0.75,pipeline
+base,p03,in_domain,a girl with long brown hair and glasses,1,base__p03__seed1.png,False,0.76,pipeline
+base,p04,in_domain,a man in a black shirt and a black vest,0,base__p04__seed0.png,False,0.76,pipeline
+base,p04,in_domain,a man in a black shirt and a black vest,1,base__p04__seed1.png,False,0.78,pipeline
+base,p05,in_domain,a man in a purple outfit standing in front of trees,0,base__p05__seed0.png,False,0.77,pipeline
+base,p05,in_domain,a man in a purple outfit standing in front of trees,1,base__p05__seed1.png,False,0.76,pipeline
+base,p06,in_domain,a man in a red and yellow outfit,0,base__p06__seed0.png,False,0.77,pipeline
+base,p06,in_domain,a man in a red and yellow outfit,1,base__p06__seed1.png,False,0.76,pipeline
+base,p07,in_domain,a man in a white hoodie looking at the camera,0,base__p07__seed0.png,False,0.75,pipeline
+base,p07,in_domain,a man in a white hoodie looking at the camera,1,base__p07__seed1.png,False,0.76,pipeline
+base,p08,in_domain,a man with black hair and a hoodie,0,base__p08__seed0.png,False,0.75,pipeline
+base,p08,in_domain,a man with black hair and a hoodie,1,base__p08__seed1.png,False,0.76,pipeline
+base,p09,in_domain,a person with long hair and green eyes,0,base__p09__seed0.png,False,0.75,pipeline
+base,p09,in_domain,a person with long hair and green eyes,1,base__p09__seed1.png,False,0.75,pipeline
+base,p10,in_domain,a woman with glasses and a white hair,0,base__p10__seed0.png,False,0.76,pipeline
+base,p10,in_domain,a woman with glasses and a white hair,1,base__p10__seed1.png,False,0.77,pipeline
+base,p11,out_of_domain,a photograph of a red double-decker bus on a rainy city street,0,base__p11__seed0.png,False,0.76,pipeline
+base,p11,out_of_domain,a photograph of a red double-decker bus on a rainy city street,1,base__p11__seed1.png,False,0.75,pipeline
+base,p12,out_of_domain,an oil painting of a bowl of fruit on a wooden table,0,base__p12__seed0.png,False,0.74,pipeline
+base,p12,out_of_domain,an oil painting of a bowl of fruit on a wooden table,1,base__p12__seed1.png,False,0.75,pipeline
+base,p13,out_of_domain,a golden retriever puppy running on a beach at sunset,0,base__p13__seed0.png,False,0.75,pipeline
+base,p13,out_of_domain,a golden retriever puppy running on a beach at sunset,1,base__p13__seed1.png,False,0.74,pipeline
+base,p14,out_of_domain,a modern glass skyscraper under a clear blue sky,0,base__p14__seed0.png,False,0.75,pipeline
+base,p14,out_of_domain,a modern glass skyscraper under a clear blue sky,1,base__p14__seed1.png,False,0.74,pipeline
+base,p15,out_of_domain,a plate of spaghetti with tomato sauce seen from above,0,base__p15__seed0.png,False,0.73,pipeline
+base,p15,out_of_domain,a plate of spaghetti with tomato sauce seen from above,1,base__p15__seed1.png,False,0.75,pipeline
+base,p16,compositional,"two ninja characters standing side by side, one wearing red and one wearing blue",0,base__p16__seed0.png,False,0.73,pipeline
+base,p16,compositional,"two ninja characters standing side by side, one wearing red and one wearing blue",1,base__p16__seed1.png,False,0.74,pipeline
+base,p17,compositional,a girl with pink hair holding a green umbrella next to a boy with black hair,0,base__p17__seed0.png,False,0.73,pipeline
+base,p17,compositional,a girl with pink hair holding a green umbrella next to a boy with black hair,1,base__p17__seed1.png,False,0.73,pipeline
+base,p18,compositional,a man with white hair standing to the left of a woman with a red scarf,0,base__p18__seed0.png,False,0.75,pipeline
+base,p18,compositional,a man with white hair standing to the left of a woman with a red scarf,1,base__p18__seed1.png,False,0.74,pipeline
+base,p19,compositional,a ninja in an orange jacket riding a blue dragon above a village,0,base__p19__seed0.png,False,0.75,pipeline
+base,p19,compositional,a ninja in an orange jacket riding a blue dragon above a village,1,base__p19__seed1.png,False,0.75,pipeline
+base,p20,compositional,"three characters: one holding a sword, one holding a book and one holding a cat",0,base__p20__seed0.png,False,0.74,pipeline
+base,p20,compositional,"three characters: one holding a sword, one holding a book and one holding a cat",1,base__p20__seed1.png,False,0.76,pipeline
+run1_lora_r4,p01,in_domain,a cat that is looking at the camera,0,run1_lora_r4__p01__seed0.png,False,1.08,pipeline
+run1_lora_r4,p01,in_domain,a cat that is looking at the camera,1,run1_lora_r4__p01__seed1.png,False,1.03,pipeline
+run1_lora_r4,p02,in_domain,a demon with a gun in his hand,0,run1_lora_r4__p02__seed0.png,True,1.05,checker_off_audited
+run1_lora_r4,p02,in_domain,a demon with a gun in his hand,1,run1_lora_r4__p02__seed1.png,False,1.06,pipeline
+run1_lora_r4,p03,in_domain,a girl with long brown hair and glasses,0,run1_lora_r4__p03__seed0.png,False,1.04,pipeline
+run1_lora_r4,p03,in_domain,a girl with long brown hair and glasses,1,run1_lora_r4__p03__seed1.png,False,1.05,pipeline
+run1_lora_r4,p04,in_domain,a man in a black shirt and a black vest,0,run1_lora_r4__p04__seed0.png,True,1.07,checker_off_audited
+run1_lora_r4,p04,in_domain,a man in a black shirt and a black vest,1,run1_lora_r4__p04__seed1.png,True,1.05,checker_off_audited
+run1_lora_r4,p05,in_domain,a man in a purple outfit standing in front of trees,0,run1_lora_r4__p05__seed0.png,True,1.05,checker_off_audited
+run1_lora_r4,p05,in_domain,a man in a purple outfit standing in front of trees,1,run1_lora_r4__p05__seed1.png,False,1.05,pipeline
+run1_lora_r4,p06,in_domain,a man in a red and yellow outfit,0,run1_lora_r4__p06__seed0.png,True,1.04,checker_off_audited
+run1_lora_r4,p06,in_domain,a man in a red and yellow outfit,1,run1_lora_r4__p06__seed1.png,True,1.05,checker_off_audited
+run1_lora_r4,p07,in_domain,a man in a white hoodie looking at the camera,0,run1_lora_r4__p07__seed0.png,True,1.04,checker_off_audited
+run1_lora_r4,p07,in_domain,a man in a white hoodie looking at the camera,1,run1_lora_r4__p07__seed1.png,True,1.04,checker_off_audited
+run1_lora_r4,p08,in_domain,a man with black hair and a hoodie,0,run1_lora_r4__p08__seed0.png,True,1.05,checker_off_audited
+run1_lora_r4,p08,in_domain,a man with black hair and a hoodie,1,run1_lora_r4__p08__seed1.png,True,1.04,checker_off_audited
+run1_lora_r4,p09,in_domain,a person with long hair and green eyes,0,run1_lora_r4__p09__seed0.png,False,1.04,pipeline
+run1_lora_r4,p09,in_domain,a person with long hair and green eyes,1,run1_lora_r4__p09__seed1.png,False,1.05,pipeline
+run1_lora_r4,p10,in_domain,a woman with glasses and a white hair,0,run1_lora_r4__p10__seed0.png,False,1.05,pipeline
+run1_lora_r4,p10,in_domain,a woman with glasses and a white hair,1,run1_lora_r4__p10__seed1.png,False,1.08,pipeline
+run1_lora_r4,p11,out_of_domain,a photograph of a red double-decker bus on a rainy city street,0,run1_lora_r4__p11__seed0.png,False,1.09,pipeline
+run1_lora_r4,p11,out_of_domain,a photograph of a red double-decker bus on a rainy city street,1,run1_lora_r4__p11__seed1.png,False,1.07,pipeline
+run1_lora_r4,p12,out_of_domain,an oil painting of a bowl of fruit on a wooden table,0,run1_lora_r4__p12__seed0.png,False,1.05,pipeline
+run1_lora_r4,p12,out_of_domain,an oil painting of a bowl of fruit on a wooden table,1,run1_lora_r4__p12__seed1.png,False,1.09,pipeline
+run1_lora_r4,p13,out_of_domain,a golden retriever puppy running on a beach at sunset,0,run1_lora_r4__p13__seed0.png,False,1.07,pipeline
+run1_lora_r4,p13,out_of_domain,a golden retriever puppy running on a beach at sunset,1,run1_lora_r4__p13__seed1.png,False,1.07,pipeline
+run1_lora_r4,p14,out_of_domain,a modern glass skyscraper under a clear blue sky,0,run1_lora_r4__p14__seed0.png,False,1.06,pipeline
+run1_lora_r4,p14,out_of_domain,a modern glass skyscraper under a clear blue sky,1,run1_lora_r4__p14__seed1.png,False,1.05,pipeline
+run1_lora_r4,p15,out_of_domain,a plate of spaghetti with tomato sauce seen from above,0,run1_lora_r4__p15__seed0.png,False,1.05,pipeline
+run1_lora_r4,p15,out_of_domain,a plate of spaghetti with tomato sauce seen from above,1,run1_lora_r4__p15__seed1.png,False,1.04,pipeline
+run1_lora_r4,p16,compositional,"two ninja characters standing side by side, one wearing red and one wearing blue",0,run1_lora_r4__p16__seed0.png,False,1.04,pipeline
+run1_lora_r4,p16,compositional,"two ninja characters standing side by side, one wearing red and one wearing blue",1,run1_lora_r4__p16__seed1.png,False,1.03,pipeline
+run1_lora_r4,p17,compositional,a girl with pink hair holding a green umbrella next to a boy with black hair,0,run1_lora_r4__p17__seed0.png,True,1.03,checker_off_audited
+run1_lora_r4,p17,compositional,a girl with pink hair holding a green umbrella next to a boy with black hair,1,run1_lora_r4__p17__seed1.png,False,1.05,pipeline
+run1_lora_r4,p18,compositional,a man with white hair standing to the left of a woman with a red scarf,0,run1_lora_r4__p18__seed0.png,False,1.05,pipeline
+run1_lora_r4,p18,compositional,a man with white hair standing to the left of a woman with a red scarf,1,run1_lora_r4__p18__seed1.png,False,1.02,pipeline
+run1_lora_r4,p19,compositional,a ninja in an orange jacket riding a blue dragon above a village,0,run1_lora_r4__p19__seed0.png,False,1.04,pipeline
+run1_lora_r4,p19,compositional,a ninja in an orange jacket riding a blue dragon above a village,1,run1_lora_r4__p19__seed1.png,False,1.04,pipeline
+run1_lora_r4,p20,compositional,"three characters: one holding a sword, one holding a book and one holding a cat",0,run1_lora_r4__p20__seed0.png,False,1.03,pipeline
+run1_lora_r4,p20,compositional,"three characters: one holding a sword, one holding a book and one holding a cat",1,run1_lora_r4__p20__seed1.png,False,1.04,pipeline
+run2_lora_r32,p01,in_domain,a cat that is looking at the camera,0,run2_lora_r32__p01__seed0.png,False,1.05,pipeline
+run2_lora_r32,p01,in_domain,a cat that is looking at the camera,1,run2_lora_r32__p01__seed1.png,False,1.04,pipeline
+run2_lora_r32,p02,in_domain,a demon with a gun in his hand,0,run2_lora_r32__p02__seed0.png,False,1.04,pipeline
+run2_lora_r32,p02,in_domain,a demon with a gun in his hand,1,run2_lora_r32__p02__seed1.png,True,1.04,checker_off_audited
+run2_lora_r32,p03,in_domain,a girl with long brown hair and glasses,0,run2_lora_r32__p03__seed0.png,False,1.04,pipeline
+run2_lora_r32,p03,in_domain,a girl with long brown hair and glasses,1,run2_lora_r32__p03__seed1.png,False,1.04,pipeline
+run2_lora_r32,p04,in_domain,a man in a black shirt and a black vest,0,run2_lora_r32__p04__seed0.png,False,1.04,pipeline
+run2_lora_r32,p04,in_domain,a man in a black shirt and a black vest,1,run2_lora_r32__p04__seed1.png,True,1.03,checker_off_audited
+run2_lora_r32,p05,in_domain,a man in a purple outfit standing in front of trees,0,run2_lora_r32__p05__seed0.png,False,1.04,pipeline
+run2_lora_r32,p05,in_domain,a man in a purple outfit standing in front of trees,1,run2_lora_r32__p05__seed1.png,False,1.02,pipeline
+run2_lora_r32,p06,in_domain,a man in a red and yellow outfit,0,run2_lora_r32__p06__seed0.png,False,1.02,pipeline
+run2_lora_r32,p06,in_domain,a man in a red and yellow outfit,1,run2_lora_r32__p06__seed1.png,True,1.03,checker_off_audited
+run2_lora_r32,p07,in_domain,a man in a white hoodie looking at the camera,0,run2_lora_r32__p07__seed0.png,False,1.03,pipeline
+run2_lora_r32,p07,in_domain,a man in a white hoodie looking at the camera,1,run2_lora_r32__p07__seed1.png,False,1.02,pipeline
+run2_lora_r32,p08,in_domain,a man with black hair and a hoodie,0,run2_lora_r32__p08__seed0.png,False,1.03,pipeline
+run2_lora_r32,p08,in_domain,a man with black hair and a hoodie,1,run2_lora_r32__p08__seed1.png,True,1.02,checker_off_audited
+run2_lora_r32,p09,in_domain,a person with long hair and green eyes,0,run2_lora_r32__p09__seed0.png,False,1.03,pipeline
+run2_lora_r32,p09,in_domain,a person with long hair and green eyes,1,run2_lora_r32__p09__seed1.png,False,1.03,pipeline
+run2_lora_r32,p10,in_domain,a woman with glasses and a white hair,0,run2_lora_r32__p10__seed0.png,False,1.04,pipeline
+run2_lora_r32,p10,in_domain,a woman with glasses and a white hair,1,run2_lora_r32__p10__seed1.png,False,1.02,pipeline
+run2_lora_r32,p11,out_of_domain,a photograph of a red double-decker bus on a rainy city street,0,run2_lora_r32__p11__seed0.png,False,1.02,pipeline
+run2_lora_r32,p11,out_of_domain,a photograph of a red double-decker bus on a rainy city street,1,run2_lora_r32__p11__seed1.png,False,1.03,pipeline
+run2_lora_r32,p12,out_of_domain,an oil painting of a bowl of fruit on a wooden table,0,run2_lora_r32__p12__seed0.png,False,1.02,pipeline
+run2_lora_r32,p12,out_of_domain,an oil painting of a bowl of fruit on a wooden table,1,run2_lora_r32__p12__seed1.png,False,1.03,pipeline
+run2_lora_r32,p13,out_of_domain,a golden retriever puppy running on a beach at sunset,0,run2_lora_r32__p13__seed0.png,False,1.03,pipeline
+run2_lora_r32,p13,out_of_domain,a golden retriever puppy running on a beach at sunset,1,run2_lora_r32__p13__seed1.png,False,1.03,pipeline
+run2_lora_r32,p14,out_of_domain,a modern glass skyscraper under a clear blue sky,0,run2_lora_r32__p14__seed0.png,False,1.03,pipeline
+run2_lora_r32,p14,out_of_domain,a modern glass skyscraper under a clear blue sky,1,run2_lora_r32__p14__seed1.png,False,1.02,pipeline
+run2_lora_r32,p15,out_of_domain,a plate of spaghetti with tomato sauce seen from above,0,run2_lora_r32__p15__seed0.png,False,1.02,pipeline
+run2_lora_r32,p15,out_of_domain,a plate of spaghetti with tomato sauce seen from above,1,run2_lora_r32__p15__seed1.png,False,1.02,pipeline
+run2_lora_r32,p16,compositional,"two ninja characters standing side by side, one wearing red and one wearing blue",0,run2_lora_r32__p16__seed0.png,False,1.02,pipeline
+run2_lora_r32,p16,compositional,"two ninja characters standing side by side, one wearing red and one wearing blue",1,run2_lora_r32__p16__seed1.png,False,1.03,pipeline
+run2_lora_r32,p17,compositional,a girl with pink hair holding a green umbrella next to a boy with black hair,0,run2_lora_r32__p17__seed0.png,False,1.02,pipeline
+run2_lora_r32,p17,compositional,a girl with pink hair holding a green umbrella next to a boy with black hair,1,run2_lora_r32__p17__seed1.png,False,1.03,pipeline
+run2_lora_r32,p18,compositional,a man with white hair standing to the left of a woman with a red scarf,0,run2_lora_r32__p18__seed0.png,False,1.03,pipeline
+run2_lora_r32,p18,compositional,a man with white hair standing to the left of a woman with a red scarf,1,run2_lora_r32__p18__seed1.png,False,1.04,pipeline
+run2_lora_r32,p19,compositional,a ninja in an orange jacket riding a blue dragon above a village,0,run2_lora_r32__p19__seed0.png,False,1.04,pipeline
+run2_lora_r32,p19,compositional,a ninja in an orange jacket riding a blue dragon above a village,1,run2_lora_r32__p19__seed1.png,True,1.02,checker_off_audited
+run2_lora_r32,p20,compositional,"three characters: one holding a sword, one holding a book and one holding a cat",0,run2_lora_r32__p20__seed0.png,False,1.02,pipeline
+run2_lora_r32,p20,compositional,"three characters: one holding a sword, one holding a book and one holding a cat",1,run2_lora_r32__p20__seed1.png,False,1.02,pipeline

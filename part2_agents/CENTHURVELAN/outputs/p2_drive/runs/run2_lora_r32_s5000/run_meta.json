@@ -1,0 +1,35 @@
+{
+ "name": "run2_lora_r32_s5000",
+ "rank": 32,
+ "sessions": [
+  {
+   "start_step": 0,
+   "seconds": 2687.1,
+   "peak_gpu_mem_mib": 6603,
+   "peak_loop_gpu_mem_mib": 5424,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "returncode": 0
+  }
+ ],
+ "finished": true,
+ "steps": 5000,
+ "learning_rate": 0.0001,
+ "batch_size": 1,
+ "grad_accum": 4,
+ "trainable_params": 6377472,
+ "adapter_mb": 24.36,
+ "train_seconds": 2687.1,
+ "peak_gpu_mem_mib": 6603,
+ "peak_loop_gpu_mem_mib": 5424,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "base_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+ "seed": 266,
+ "mixed_precision": "fp16",
+ "train_images": 1099,
+ "prompts_sha256": "5b587498de357aea73c684ec22b69d8013adafc0240e37ba21197bd6da11650f",
+ "split_sha256": "62516f7de0fc9b6c0e645aa6124cd1763a1030adb7e44c271aa4b901ac2d6457",
+ "dataset": "lambdalabs/naruto-blip-captions",
+ "dataset_revision": "1ed13e8ef280bd45e3bbac4cfa8bbd9d64ec9f89",
+ "diffusers": "0.42.1",
+ "peft": "0.21.2"
+}

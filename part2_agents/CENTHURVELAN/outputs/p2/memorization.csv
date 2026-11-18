@@ -1,0 +1,21 @@
+model,id,file,nearest_train,nearest_train_caption,clip_sim
+base,p01,base__p01__seed0.png,0319.png,a cat with a tennis ball in its mouth,0.7096
+base,p02,base__p02__seed0.png,0190.png,a white dog with a blue sky in the background,0.6264
+base,p03,base__p03__seed0.png,0222.png,a man standing in front of a bridge,0.6264
+base,p04,base__p04__seed0.png,1042.png,a man with green eyes and a green shirt,0.4333
+base,p05,base__p05__seed0.png,0222.png,a man standing in front of a bridge,0.6035
+base,p06,base__p06__seed0.png,0592.png,a man in a suit with a shirt on,0.4972
+base,p07,base__p07__seed0.png,0245.png,a man with glasses and a banda on his head,0.5134
+base,p08,base__p08__seed0.png,0222.png,a man standing in front of a bridge,0.5636
+base,p09,base__p09__seed0.png,0190.png,a white dog with a blue sky in the background,0.5428
+base,p10,base__p10__seed0.png,0823.png,an older man with grey hair and a white shirt,0.6177
+run2_lora_r32,p01,run2_lora_r32__p01__seed0.png,0319.png,a cat with a tennis ball in its mouth,0.8704
+run2_lora_r32,p02,run2_lora_r32__p02__seed0.png,1143.png,a person wearing a hoodie and looking at the camera,0.7693
+run2_lora_r32,p03,run2_lora_r32__p03__seed0.png,0974.png,a girl with long red hair and purple eyes,0.7357
+run2_lora_r32,p04,run2_lora_r32__p04__seed0.png,0022.png,a man with a cell in his hand,0.8651
+run2_lora_r32,p05,run2_lora_r32__p05__seed0.png,1105.png,a man with a hat and a hoodie,0.8955
+run2_lora_r32,p06,run2_lora_r32__p06__seed0.png,0647.png,a man with a beard and a beard,0.8713
+run2_lora_r32,p07,run2_lora_r32__p07__seed0.png,0248.png,a man in a white hat and scarf,0.8881
+run2_lora_r32,p08,run2_lora_r32__p08__seed0.png,0159.png,a man with long hair and a hoodie,0.8461
+run2_lora_r32,p09,run2_lora_r32__p09__seed0.png,0038.png,a girl in a red dress with long brown hair,0.809
+run2_lora_r32,p10,run2_lora_r32__p10__seed0.png,0029.png,a woman with glasses and a white coat,0.7048
