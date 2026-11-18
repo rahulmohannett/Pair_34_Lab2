@@ -47,9 +47,9 @@ python src/build_notebook.py src/p1_eval_source.py notebooks/p1_eval.ipynb
 ## Evaluation files
 
 - `eval/golden_set.csv`: our 25 questions written from the three PDFs, with expected answer, required facts, status
-  and source page or figure. `eval/golden_questions.csv` holds the questions only. They were written and committed
-  before tuning, in the course repository (`data266-9067`, commit `86e7812`, 2026-11-13); the first tuning run on
-  them was on 2026-11-14.
+  and source page or figure. `eval/golden_questions.csv` holds the questions only. They were written on 2026-11-10
+  and have not changed since; they were first committed in our course repository (`data266-9067`, commit `86e7812`,
+  2026-11-13; private, read access on request) and the first run of the golden notebook was on 2026-11-14.
 - `eval/score_p1.py`: scorer (0.4 facts, 0.2 status, 0.2 figure references, 0.2 citations).
 - `eval/p1_runs/`: the saved baseline and final golden runs used by `p1_eval.ipynb`.
 - `eval/p1_groundedness_ratings.csv`: both members' groundedness ratings (1-5) of the final answers;

@@ -1,16 +1,8 @@
-# pinned at first Colab/Kaggle run (pip freeze); placeholders
-torch
-pymupdf
-sentence-transformers
-rank_bm25
-chromadb
-transformers
-accelerate
-diffusers
-peft
-torchmetrics
-open_clip_torch
-lpips
-langgraph
-gradio
-bitsandbytes
+# DATA266 Lab 2, Team 34. The three parts run on different runtimes (Part 1 on Kaggle with torch 2.11,
+# Parts 2 and 3 on Colab with torch 2.14.1), so each part pins its own environment. Install the one you run:
+#
+#   pip install -r part1_rag/rahul_mohan/requirements.txt      # Kaggle, GPU T4 x2
+#   pip install -r part2_lora/rahul_mohan/requirements.txt     # Colab, GPU L4 (fits a 16 GB T4: peak 3.6 GiB)
+#   pip install -r part3_agents/rahul_mohan/requirements.txt   # Colab, GPU T4
+#
+# Each notebook also installs its pinned versions itself and prints the versions it ran with in Cell 1.

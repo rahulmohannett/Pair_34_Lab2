@@ -9,7 +9,7 @@ requests are refused by the Planner. A Gradio app shows every agent's output for
 notebooks/p3_agents.ipynb    executed run (Colab T4): agents, 15 scenarios + 10 red-team cases, results table, app
 src/p3_agents_source.py      notebook source (cells split by "# %%"); rebuild with src/build_notebook.py
 src/p3_review_page.py        builds outputs/p3/review.html, the page both members rated in
-eval/p3_scenarios.csv        15 scenarios with pass/fail rubrics (committed before the graded run)
+eval/p3_scenarios.csv        15 scenarios with pass/fail rubrics (written before the first run; see the root README)
 eval/p3_redteam.csv          10 red-team cases
 outputs/p2/hf_links_s5000.json  Hugging Face repo + revision of the Part 2 LoRA the notebook loads
 outputs/p3/traces/           one JSON trace per case: every agent's input, output and seconds
