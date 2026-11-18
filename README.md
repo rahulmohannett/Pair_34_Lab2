@@ -13,7 +13,8 @@ part1_rag/          # multimodal RAG over the competition documents (Kaggle)
     notebooks/p1_rag.ipynb              # final system, executed Kaggle run (2x T4), writes submission.csv
     notebooks/p1_golden.ipynb           # final system on the 25 golden questions (executed)
     notebooks/p1_golden_baseline.ipynb  # dense-only baseline on the same questions (executed)
-    notebooks/p1_eval.ipynb             # task 1.4 results table from the two golden runs (executed)
+    notebooks/p1_golden_no_reranker.ipynb  # final system without the reranker (bonus ablation, executed)
+    notebooks/p1_eval.ipynb             # task 1.4 results table and reranker ablation from the golden runs (executed)
     src/                                # notebook sources, notebook builders, scorer, rating page
     eval/                               # golden set, saved golden runs, groundedness ratings, results table
     requirements.txt
@@ -41,7 +42,7 @@ Each part's README has the full steps; in short:
 
 | Part | Runtime | Steps | Details |
 |---|---|---|---|
-| 1 | Kaggle, GPU T4 x2, competition data attached | Run all `p1_rag.ipynb` (about 42 min for 40 questions); set `QUESTIONS_PATH` for another question file. For the evaluation, run `p1_golden.ipynb` and `p1_golden_baseline.ipynb`, copy their outputs into `eval/p1_runs/`, then run `p1_eval.ipynb` on any CPU | `part1_rag/rahul_mohan/README.md` |
+| 1 | Kaggle, GPU T4 x2, competition data attached | Run all `p1_rag.ipynb` (about 42 min for 40 questions); set `QUESTIONS_PATH` for another question file. For the evaluation, run `p1_golden.ipynb`, `p1_golden_baseline.ipynb` and `p1_golden_no_reranker.ipynb`, copy their outputs into `eval/p1_runs/`, then run `p1_eval.ipynb` on any CPU | `part1_rag/rahul_mohan/README.md` |
 | 2 | Colab, GPU (L4 used; peak 3.6 GiB, so a T4 fits), secret `HF_TOKEN` | Run all `p2_train.ipynb`, then `p2_generate_eval.ipynb`, then `p2_push_hf.ipynb` (CPU is enough) | `part2_lora/rahul_mohan/README.md` |
 | 3 | Colab, GPU T4, secret `HF_TOKEN` | Run all `p3_agents.ipynb` (about 10 min with saved traces, 25 min from scratch); set `LAUNCH_APP = True` for the Gradio demo | `part3_agents/rahul_mohan/README.md` |
 
