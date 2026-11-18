@@ -1,0 +1,65 @@
+{
+ "stamp": "20261116_0055",
+ "notebook_version": "p1-v3.3 2026-11-12: v3.2 + prompt fed in pieces (memory grows linearly), larger context, more passages",
+ "hardware": {
+  "gpu": "Tesla T4",
+  "gpu_mem": "15360 MiB",
+  "driver": "580.82.07",
+  "cuda": "13.0",
+  "cpu_cores": 2,
+  "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+  "ram_gb": 12.7,
+  "disk_free_gb": 112.5
+ },
+ "vlm": "Qwen/Qwen2.5-VL-7B-Instruct",
+ "dtype": "4bit",
+ "text_model": "Qwen/Qwen2.5-7B-Instruct",
+ "text_precision": "4bit",
+ "focused_readings": 8,
+ "model_copies": 1,
+ "wall_min": 14.795396514733632,
+ "reranker": "BAAI/bge-reranker-base",
+ "top_k": 12,
+ "fact_lookup": true,
+ "answered_from_facts": 19,
+ "short_context": 0,
+ "answers_replaced_by_facts": 6,
+ "answers_expanded_by_facts": 1,
+ "focus_applied": 1,
+ "model_calculations": 15,
+ "plan_repaired_or_rejected": 4,
+ "oom_skipped": 0,
+ "images_dropped": 0,
+ "prompt_tokens_max": 8718,
+ "prompt_budget": 9000,
+ "piecewise": true,
+ "top_k_final": 12,
+ "mem_probe": {
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "piecewise": true,
+  "piece": 768,
+  "free_gb": {
+   "cuda:0": 8.23
+  },
+  "peak_gb_3000": {
+   "cuda:0": 0.58
+  },
+  "peak_gb_6000": {
+   "cuda:0": 0.74
+  },
+  "memory_fit_tokens": 113523,
+  "prompt_tokens_per_s": 1123
+ },
+ "context_trimmed": 0,
+ "small_gpu": false,
+ "baseline": false,
+ "median_s": 20.45750617980957,
+ "total_min": 14.793462300300598,
+ "status_counts": {
+  "answered": 32,
+  "session_override": 3,
+  "conflict": 2,
+  "not_found": 2,
+  "false_premise": 1
+ }
+}
