@@ -1,0 +1,17 @@
+{
+  "flagged_main": 16,
+  "flagged_kid_set": 84,
+  "flagged_main_by_model": {
+    "base": 0,
+    "run1_lora_r4": 11,
+    "run2_lora_r32": 5
+  },
+  "flagged_kid_set_by_model": {
+    "base": 0,
+    "run1_lora_r4": 44,
+    "run2_lora_r32": 40
+  },
+  "verdict": "16 of 16 flagged images in my 120-image set inspected: clothed anime characters in colorful outfits and close-up faces, including a few demon-like faces with red markings; no explicit nudity or graphic gore. All false positives.",
+  "same_sample_max_mean_abs_diff": 0.0,
+  "checker_off_copies_flagged_again": "16/16"
+}

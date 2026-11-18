@@ -1,30 +1,21 @@
-# Part 3 — multimodal multi-agent system (rahul_mohan)
+# Part 3 - Centhurvelan Ramalingam Sakthivel (baseline run of the complete pipeline)
 
-Five agents in a LangGraph graph over one typed (pydantic) state:
-Planner (input safety) → Vision Understanding → Prompt Engineering → Image Generation → Critique (output safety) →
-accept, or revise (back to Prompt Engineering, at most 2 times). Caption/question requests stop after Vision; unsafe
-requests are refused by the Planner. A Gradio app shows every agent's output for one request.
+Baseline run of the team's five-agent system (notebook version p3-v2) on one NVIDIA GeForce RTX 5090, using the
+rank-32 LoRA from my own Part 2 run (`outputs/p2/hf_links_s5000.json`). The team's final run and its evaluation are in
+`../rahul_mohan/`.
 
-```text
-notebooks/p3_agents.ipynb    executed run (Colab T4): agents, 15 scenarios + 10 red-team cases, results table, app
-src/p3_agents_source.py      notebook source (cells split by "# %%"); rebuild with src/build_notebook.py
-src/p3_review_page.py        builds outputs/p3/review.html, the page both members rated in
-eval/p3_scenarios.csv        15 scenarios with pass/fail rubrics (written before the first run; see the root README)
-eval/p3_redteam.csv          10 red-team cases
-outputs/p2/hf_links_s5000.json  Hugging Face repo + revision of the Part 2 LoRA the notebook loads
-outputs/p3/traces/           one JSON trace per case: every agent's input, output and seconds
-outputs/p3/rating_sheet_filled.csv, critic_labels_filled.csv, redteam_filled.csv   resolved human labels
-outputs/p3/ratings/          each member's independent ratings (A, B) before resolution
-outputs/p3/results_table.csv, run_info.json, app_selftest.json
-outputs/p3/v1_run/           results of the first run, before the v1 -> v2 fixes (kept for the report)
-```
+| Measurement | Value | Where |
+|---|---|---|
+| Cases run | 15 scenarios and 10 red-team cases, each with a JSON trace of every agent's input, output and time | `outputs/p3/traces/` |
+| Red-team attack success | 0/10 (8 refused by the Planner, 2 broken files returned a clear error) | `outputs/p3/redteam_results.csv` |
+| Median seconds per request | 14.0 without the critique loop, 15.0 with it | `outputs/p3/run_info.json` |
+| Peak GPU memory | 9.31 GiB | `outputs/p3/run_info.json` |
+| Gradio app self-test | Pass: domain-style request, request that must be refused, broken file | `outputs/p3/app_selftest.json` |
 
-## Run it
-1. Colab → GPU T4. Add a Colab secret `HF_TOKEN` (read access to the Part 2 LoRA repo) and enable notebook access.
-2. Open `notebooks/p3_agents.ipynb` from a clone of this repo. If the clone is not at our Drive path, set
-   `P3_LAB2_DIR` to the folder that contains `notebooks/` (or start the kernel inside `notebooks/`).
-3. Runtime → Run all (~10 min when the saved traces are reused; ~25 min from scratch). Cases are re-run only if
-   the eval files or the config changed (their hashes are stored in each trace).
-4. Demo: set `LAUNCH_APP = True` in Cell 1; the last cell prints a public Gradio link.
+- `notebooks/p3_agents.ipynb`: the notebook (setup, models, agents and a demo request); the run's evaluation files
+  are in `outputs/p3/`.
+- `outputs/p3/review.html`, `rating_sheet.csv`, `critic_labels.csv`: the rating files for this run.
+- `eval/`: the team's 15 scenarios and 10 red-team cases.
+- `WINDOWS_VS_CODE.md`, `requirements.txt`: how this run was set up. Generated images are kept outside GitHub.
 
-Generated images go to `P3_DATA_DIR` (default: Google Drive on Colab, `outputs/p3_drive/` elsewhere), not to Git.
+Human evaluation: rater B in the team's pass/fail labels (`../rahul_mohan/outputs/p3/ratings/p3_ratings_B.csv`).
