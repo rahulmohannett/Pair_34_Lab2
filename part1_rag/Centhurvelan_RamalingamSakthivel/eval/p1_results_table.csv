@@ -1,0 +1,2 @@
+run,notebook_version,gpu,vision_model,text_model,reranker,total_minutes,median_seconds,questions,answered,session_override,conflict,not_found,false_premise,oom_skips,images_dropped
+run_20261116_0055,p1-v3.3,Tesla T4,Qwen/Qwen2.5-VL-7B-Instruct,Qwen/Qwen2.5-7B-Instruct,BAAI/bge-reranker-base,14.7934623,20.4575062,40,32,3,2,2,1,0,0
