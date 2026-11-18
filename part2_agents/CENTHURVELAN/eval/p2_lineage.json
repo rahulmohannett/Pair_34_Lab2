@@ -1,0 +1,19 @@
+{
+ "all_prompts": {
+  "rows": 20,
+  "in_domain": "10 test captions drawn with seed 266",
+  "sha256": "5b587498de357aea73c684ec22b69d8013adafc0240e37ba21197bd6da11650f",
+  "hashed_at_utc": "2026-11-17T01:35:15+00:00",
+  "runs_finished_when_hashed": []
+ },
+ "split": {
+  "dataset": "lambdalabs/naruto-blip-captions",
+  "revision": "1ed13e8ef280bd45e3bbac4cfa8bbd9d64ec9f89",
+  "seed": 266,
+  "train": 1099,
+  "test": 122,
+  "sha256": "62516f7de0fc9b6c0e645aa6124cd1763a1030adb7e44c271aa4b901ac2d6457",
+  "hashed_at_utc": "2026-11-17T01:35:15+00:00",
+  "runs_finished_when_hashed": []
+ }
+}
