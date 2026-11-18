@@ -247,3 +247,37 @@ if not baseline:
 if not human:
     print("Human evaluation rows missing: fill both rating columns in eval/p1_groundedness_ratings.csv")
 table
+
+# %% [markdown]
+# ## Bonus: what the reranker adds
+# The same final system with only the cross-encoder reranker (`BAAI/bge-reranker-base`) switched off, run by
+# `notebooks/p1_golden_no_reranker.ipynb` on the same 25 golden questions (outputs in `eval/p1_runs/no_reranker/`).
+# BM25, fusion, exact-figure retrieval and the fact table are unchanged, so the difference is the reranker's.
+# The last row is the mean golden score with the competition's weighting (0.4 facts, 0.2 status, 0.2 figure
+# references, 0.2 citations).
+
+# %%
+no_rerank = load_run("no_reranker")
+if no_rerank:
+    assert not no_rerank["info"]["reranker"] and not no_rerank["info"]["baseline"] and no_rerank["info"]["fact_lookup"], \
+        "this folder must hold the final system with only the reranker off"
+    assert final["info"]["reranker"], "the final run must use the reranker"
+    assert no_rerank["info"]["notebook_version"] == final["info"]["notebook_version"], "both runs must use the same code version"
+    EV["no_reranker"] = evaluate(no_rerank)
+
+    def golden_score(run):
+        return sum(score_row(p, g)["total"] for (_, p), (_, g) in zip(run["sub"].iterrows(), gold.iterrows())) / len(gold)
+
+    ablation = pd.DataFrame({"Final without reranker": summary(no_rerank, EV["no_reranker"]),
+                             "Final (with reranker)": summary(final, EV["final"])})
+    ablation.loc["Golden score (0-1, competition weighting)"] = [f"{golden_score(no_rerank):.3f}", f"{golden_score(final):.3f}"]
+    ablation.to_csv(EVAL / "p1_reranker_ablation.csv")
+    n, f = EV["no_reranker"], EV["final"]
+    changed = pd.DataFrame({"question_id": f["question_id"], "category": f["category"],
+                            "correct_without": n["correct"], "correct_with": f["correct"],
+                            "recall@5_without": n["recall@5"], "recall@5_with": f["recall@5"]})
+    recall_moved = changed["recall@5_without"].astype(str) != changed["recall@5_with"].astype(str)   # None == None here
+    display(changed[(changed.correct_without != changed.correct_with) | recall_moved])
+    display(ablation)
+else:
+    print("Reranker ablation missing: run notebooks/p1_golden_no_reranker.ipynb and copy its outputs to eval/p1_runs/no_reranker/")

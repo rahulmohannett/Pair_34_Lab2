@@ -1,0 +1,39 @@
+question_id               category  answer  status  figures  citations  total
+        G01           facts_tables    1.00     1.0     1.00       1.00   1.00
+        G02           facts_tables    1.00     1.0     1.00       1.00   1.00
+        G03           facts_tables    1.00     1.0     1.00       1.00   1.00
+        G04           facts_tables    1.00     1.0     1.00       1.00   1.00
+        G05           facts_tables    0.50     1.0     1.00       1.00   0.80
+        G06                figures    1.00     1.0     1.00       1.00   1.00
+        G07                figures    1.00     1.0     1.00       0.90   0.98
+        G08                figures    0.67     1.0     0.50       0.62   0.69
+        G09                figures    1.00     1.0     1.00       1.00   1.00
+        G10                figures    1.00     1.0     1.00       1.00   1.00
+        G11                figures    1.00     1.0     1.00       1.00   1.00
+        G12            two_sources    1.00     1.0     1.00       1.00   1.00
+        G13            two_sources    1.00     1.0     1.00       1.00   1.00
+        G14            two_sources    1.00     1.0     1.00       1.00   1.00
+        G15             multi_turn    1.00     1.0     1.00       1.00   1.00
+        G16             multi_turn    1.00     1.0     1.00       1.00   1.00
+        G17             multi_turn    1.00     1.0     0.67       0.67   0.87
+        G18             multi_turn    1.00     1.0     1.00       1.00   1.00
+        G19             multi_turn    1.00     1.0     0.00       1.00   0.80
+        G20    conflicts_revisions    1.00     1.0     1.00       0.94   0.99
+        G21    conflicts_revisions    1.00     1.0     1.00       1.00   1.00
+        G22    conflicts_revisions    1.00     1.0     1.00       1.00   1.00
+        G23 unanswerable_injection    1.00     1.0     1.00       1.00   1.00
+        G24 unanswerable_injection    1.00     1.0     1.00       1.00   1.00
+        G25 unanswerable_injection    1.00     1.0     1.00       1.00   1.00
+
+by category:
+                         answer  status  figures  citations  total
+category                                                         
+conflicts_revisions      1.000     1.0    1.000      0.981  0.996
+facts_tables             0.900     1.0    1.000      1.000  0.960
+figures                  0.944     1.0    0.917      0.920  0.945
+multi_turn               1.000     1.0    0.733      0.933  0.933
+two_sources              1.000     1.0    1.000      1.000  1.000
+unanswerable_injection   1.000     1.0    1.000      1.000  1.000
+
+mean: {'answer': 0.967, 'status': 1.0, 'figures': 0.927, 'citations': 0.965, 'total': 0.965}
+correct (all facts + right status): 23/25

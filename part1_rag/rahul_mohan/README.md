@@ -10,7 +10,8 @@ references, following the lab's answering rules. Open models only; no hosted API
 | `notebooks/p1_rag.ipynb` | Final system. Reads `QUESTIONS_PATH` (default: the competition's `Questions.csv`) and writes `submission.csv`. Saved with the outputs of the Kaggle run that scored 0.937 on the public leaderboard (version p1-v3.16). | Kaggle, GPU T4 x2, competition data attached | about 42 min for 40 questions |
 | `notebooks/p1_golden.ipynb` | Final system on our 25 golden questions; writes `golden_<time>.csv`, traces, seconds per question and the score. | Kaggle, same settings | about 22 min |
 | `notebooks/p1_golden_baseline.ipynb` | Baseline on the same 25 questions: dense retrieval only (no BM25, reranker, exact-figure retrieval, per-document quota or fact-table lookup). | Kaggle, same settings | about 17 min |
-| `notebooks/p1_eval.ipynb` | Results table (task 1.4) from the two saved golden runs in `eval/p1_runs/`: correctness /25, Recall@5, citation accuracy, groundedness ratings, median seconds per question, Appendix C checks. | Any CPU | seconds |
+| `notebooks/p1_golden_no_reranker.ipynb` | Reranker ablation: the final system on the same 25 questions with only the cross-encoder reranker switched off. | Kaggle, same settings | about 22 min |
+| `notebooks/p1_eval.ipynb` | Results table (task 1.4) from the two saved golden runs in `eval/p1_runs/`: correctness /25, Recall@5, citation accuracy, groundedness ratings, median seconds per question, Appendix C checks, and the reranker ablation. | Any CPU | seconds |
 
 ## Run it
 
@@ -19,7 +20,8 @@ references, following the lab's answering rules. Open models only; no hosted API
 2. For the evaluation, run `notebooks/p1_golden.ipynb` and `notebooks/p1_golden_baseline.ipynb` the same way. Both
    write the golden-set files they need themselves, so no extra dataset is attached. Copy each run's
    `golden_*.csv`, `traces_*_golden.jsonl`, `run_*_golden.json` and `seconds_*.csv` into `eval/p1_runs/final/`
-   and `eval/p1_runs/baseline/`.
+   and `eval/p1_runs/baseline/`. For the reranker ablation, run `notebooks/p1_golden_no_reranker.ipynb` the same way
+   and copy its files into `eval/p1_runs/no_reranker/`.
 3. Run `notebooks/p1_eval.ipynb` locally (`jupyter nbconvert --to notebook --execute notebooks/p1_eval.ipynb --inplace`).
    It writes `eval/p1_results_table.csv`. The first run also writes an empty `eval/p1_groundedness_ratings.csv`.
 4. Groundedness ratings: `python src/p1_rating_page.py <downloaded p1_golden output folder>` writes
@@ -28,7 +30,7 @@ references, following the lab's answering rules. Open models only; no hosted API
    `p1_ratings_A.csv` / `p1_ratings_B.csv`; the Combine tab writes `p1_groundedness_ratings.csv` for `eval/`.
    Rerun `notebooks/p1_eval.ipynb`.
 
-Kaggle runs a notebook outside a Git checkout, so Cell 1 of the three Kaggle notebooks prints an empty `commit`;
+Kaggle runs a notebook outside a Git checkout, so Cell 1 of the four Kaggle notebooks prints an empty `commit`;
 it prints the code version instead (`p1-v3.16`). Their code is identical to the notebooks at tag `p1-v1.0`.
 The dev questions we used while tuning are not in this repository; the golden set was never used for tuning
 decisions before it was committed.
@@ -41,6 +43,7 @@ Each notebook is built from a plain source file with cells separated by `# %%`:
 python src/build_notebook.py src/p1_rag_source.py notebooks/p1_rag.ipynb
 python src/build_p1_golden.py               # notebooks/p1_golden.ipynb
 python src/build_p1_golden.py --baseline    # notebooks/p1_golden_baseline.ipynb
+python src/build_p1_golden.py --no-reranker # notebooks/p1_golden_no_reranker.ipynb
 python src/build_notebook.py src/p1_eval_source.py notebooks/p1_eval.ipynb
 ```
 
@@ -51,10 +54,11 @@ python src/build_notebook.py src/p1_eval_source.py notebooks/p1_eval.ipynb
   and have not changed since; they were first committed in our course repository (`data266-9067`, commit `86e7812`,
   2026-11-13; private, read access on request) and the first run of the golden notebook was on 2026-11-14.
 - `eval/score_p1.py`: scorer (0.4 facts, 0.2 status, 0.2 figure references, 0.2 citations).
-- `eval/p1_runs/`: the saved baseline and final golden runs used by `p1_eval.ipynb`.
+- `eval/p1_runs/`: the saved baseline, final and no-reranker golden runs used by `p1_eval.ipynb`.
 - `eval/p1_groundedness_ratings.csv`: both members' groundedness ratings (1-5) of the final answers;
   `eval/p1_ratings/` holds each rater's own file.
 - `eval/p1_results_table.csv`: the task 1.4 table.
+- `eval/p1_reranker_ablation.csv`: the final system with and without the reranker.
 
 ## Results (golden set, 25 questions)
 
@@ -68,3 +72,17 @@ python src/build_notebook.py src/p1_eval_source.py notebooks/p1_eval.ipynb
 | Median seconds per question | 40.1 | 48.2 |
 
 Kaggle public leaderboard: 0.937.
+
+### Reranker ablation (golden set)
+
+| Measurement | Final without reranker | Final (with reranker) |
+|---|---|---|
+| Answer correctness | 23 / 25 | 22 / 25 |
+| Retrieval Recall@5 | 0.96 (22 of 23) | 0.96 (22 of 23) |
+| Citation accuracy | 0.92 (60 of 65) | 0.91 (60 of 66) |
+| Median seconds per question | 51.6 | 48.2 |
+| Golden score (competition weighting) | 0.965 | 0.953 |
+
+On our golden set the reranker did not improve results: Recall@5 is the same (it fixes G01 and loses G24), and
+one more question (G06) is fully correct without it. The final system keeps the reranker because it was chosen on
+the dev questions before this run; we report this as no measured improvement.

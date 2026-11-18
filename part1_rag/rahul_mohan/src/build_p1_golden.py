@@ -11,7 +11,11 @@ With --dev it builds notebooks/p1_golden_dev.ipynb: the final pipeline on the 25
 questions (eval/dev_set.csv, tuning data). That notebook is a local tuning tool and stays out of the team repository;
 notebooks/p1_golden.ipynb and notebooks/p1_golden_baseline.ipynb hold only the 25 golden questions.
 
-Usage: python3 src/build_p1_golden.py [--baseline | --dev] [src/some_candidate_source.py]
+With --no-reranker it builds notebooks/p1_golden_no_reranker.ipynb: the final pipeline on the 25 golden questions with
+only the cross-encoder reranker switched off (USE_RERANKER=0); everything else is the final system. Comparing it with
+the final run shows what the reranker adds (bonus task in notebooks/p1_eval.ipynb).
+
+Usage: python3 src/build_p1_golden.py [--baseline | --dev | --no-reranker] [src/some_candidate_source.py]
 """
 import os
 import subprocess
@@ -21,9 +25,11 @@ import tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 LAB2 = os.path.dirname(HERE)
 # Optional argument: another source file (a candidate version under test); default is the final source.
-ARGS = [a for a in sys.argv[1:] if a not in ("--baseline", "--dev")]
+ARGS = [a for a in sys.argv[1:] if a not in ("--baseline", "--dev", "--no-reranker")]
 BASELINE = "--baseline" in sys.argv[1:]
 WITH_DEV = "--dev" in sys.argv[1:]
+NO_RERANK = "--no-reranker" in sys.argv[1:]
+assert not (NO_RERANK and (BASELINE or WITH_DEV)), "--no-reranker is the final system minus the reranker only"
 assert not (BASELINE and WITH_DEV), "the dev questions are scored with the final system only"
 SRC = ARGS[0] if ARGS else os.path.join(HERE, "p1_rag_source.py")
 src = open(SRC, encoding="utf-8").read()
@@ -42,6 +48,12 @@ if BASELINE:   # dense retrieval only; the fact-table lookup is part of the fina
                      ('USE_FACTS = os.environ.get("USE_FACTS", "1") == "1"', 'USE_FACTS = os.environ.get("USE_FACTS", "0") == "1"')):
         assert src.count(old) == 1
         src = src.replace(old, new)
+
+if NO_RERANK:   # ablation: the final system with only the cross-encoder reranker off
+    old, new = ('USE_RERANKER = os.environ.get("USE_RERANKER", "1") == "1"',
+                'USE_RERANKER = os.environ.get("USE_RERANKER", "0") == "1"   # ablation notebook: reranker off')
+    assert src.count(old) == 1
+    src = src.replace(old, new)
 
 # Dev questions (eval/dev_set.csv, tuning data) run in the same pass and are scored separately. These two patches
 # apply to the golden notebook only; p1_rag_source.py and notebooks/p1_rag.ipynb are not changed by them.
@@ -71,14 +83,18 @@ files = {name: open(os.path.join(LAB2, "eval", name), encoding="utf-8").read()
          for name in (("golden_questions.csv", "golden_set.csv", "dev_questions.csv", "dev_set.csv", "score_p1.py") if WITH_DEV else
                       ("golden_questions.csv", "golden_set.csv", "score_p1.py"))}
 writer = ["# %% [markdown]",
-          "# # Part 1 - golden-set evaluation" + (" (baseline: dense retrieval only)" if BASELINE else ""),
+          "# # Part 1 - golden-set evaluation" + (" (baseline: dense retrieval only)" if BASELINE else " (ablation: final system without the reranker)" if NO_RERANK else ""),
           ("# The p1_rag pipeline run on our own 25 golden questions with dense retrieval only: no BM25, no reranker, no exact-figure"
            if BASELINE else
+           "# The final p1_rag pipeline on our own 25 golden questions with only the cross-encoder reranker (bge-reranker-base)"
+           if NO_RERANK else
            "# The p1_rag pipeline run on our own 25 golden questions plus 22 dev questions (all written from the documents, not"
            if WITH_DEV else
            "# The final p1_rag pipeline run on our own 25 golden questions (written from the documents, not the competition's"),
           ("# pinning, no per-document quota and no fact-table lookup. Documents, chart descriptions, models and prompt are the same as in the final system. Attach the competition data; no other dataset is needed."
            if BASELINE else
+           "# switched off; BM25, fusion, exact-figure retrieval and the fact table are as in the final system. Attach the competition data; no other dataset is needed."
+           if NO_RERANK else
            "# the competition's questions), each set scored separately with eval/score_p1.py. Attach the competition data; no other dataset is needed."
            if WITH_DEV else
            "# questions), scored with eval/score_p1.py. Attach the competition data; no other dataset is needed."),
@@ -103,6 +119,6 @@ with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False, encoding="utf-
     tmp = fh.name
 try:
     subprocess.run([sys.executable, os.path.join(HERE, "build_notebook.py"), tmp,
-                    os.path.join(LAB2, "notebooks", "p1_golden_baseline.ipynb" if BASELINE else "p1_golden_dev.ipynb" if WITH_DEV else "p1_golden.ipynb")], check=True)
+                    os.path.join(LAB2, "notebooks", "p1_golden_baseline.ipynb" if BASELINE else "p1_golden_no_reranker.ipynb" if NO_RERANK else "p1_golden_dev.ipynb" if WITH_DEV else "p1_golden.ipynb")], check=True)
 finally:
     os.remove(tmp)
